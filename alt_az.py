@@ -23,7 +23,7 @@ Render the optional alt-az grid of the planisphere.
 
 from math import atan2
 
-from constants import unit_deg, unit_rev, unit_cm, unit_mm, central_hole_size
+from constants import unit_deg, unit_rev, unit_mm, central_hole_size, r_1
 from constants import radius, transform, pos
 from graphics_context import BaseComponent
 from numpy import arange
@@ -42,19 +42,38 @@ class AltAzGrid(BaseComponent):
         """
         return "alt_az_grid"
 
-    def bounding_box(self):
+    def bounding_box(self, settings):
         """
         Return the bounding box of the canvas area used by this component.
 
+        :param settings:
+            A dictionary of settings required by the renderer.
         :return:
          Dictionary with the elements 'x_min', 'x_max', 'y_min' and 'y_max' set
         """
-        return {
-            'x_min': -50 * unit_cm,
-            'x_max': 50 * unit_cm,
-            'y_min': -50 * unit_cm,
-            'y_max': 50 * unit_cm
+
+        latitude = abs(settings['latitude'])
+
+        bounding_box = {
+            'x_min': 0,
+            'x_max': 0,
+            'y_min': 0,
+            'y_max': 0
         }
+
+        # Trace around horizon, keeping track of minimum and maximum coordinates
+        alt = -12
+        path = [transform(alt=alt, az=az, latitude=latitude) for az in arange(0, 360.5, 1)]
+
+        for p in path:
+            r_b = radius(dec=p[1] / unit_deg, latitude=latitude)
+            p = pos(r_b, p[0])
+            bounding_box['x_min'] = min(bounding_box['x_min'], p['x'])
+            bounding_box['x_max'] = max(bounding_box['x_max'], p['x'])
+            bounding_box['y_min'] = min(bounding_box['y_min'], p['y'])
+            bounding_box['y_max'] = max(bounding_box['y_max'], p['y'])
+
+        return bounding_box
 
     def do_rendering(self, settings, context):
         """
@@ -75,63 +94,71 @@ class AltAzGrid(BaseComponent):
 
         # Draw horizon, and line to cut around edge
         for alt in (-10, 0):
-            p = []
-            for az in arange(0, 360.5, 1):
-                p.append(transform(alt=alt, az=az, latitude=latitude))
-            for i in range(1, len(p)):
-                r_a = radius(dec=p[i - 1][1] / unit_deg, latitude=latitude)
-                r_b = radius(dec=p[i][1] / unit_deg, latitude=latitude)
-                context.move_to(**pos(r_a, p[i - 1][0]))
-                context.line_to(**pos(r_b, p[i][0]))
+            path = [transform(alt=alt, az=az, latitude=latitude) for az in arange(0, 360.5, 1)]
+
+            context.begin_path()
+            for i, p in enumerate(path):
+                r_b = radius(dec=p[1] / unit_deg, latitude=latitude)
+                if i == 0:
+                    context.move_to(**pos(r_b, p[0]))
+                else:
+                    context.line_to(**pos(r_b, p[0]))
+            context.stroke()
+
+            if alt == -10:
+                # Create clipping area, excluding central hole
+                context.begin_sub_path()
+                context.circle(centre_x=0, centre_y=0, radius=central_hole_size)
+                context.stroke()
+                context.clip()
 
         # Draw lines of constant altitude
+        context.begin_path()
         for alt in range(10, 85, 10):
-            p = []
-            for az in arange(0, 360.5, 1):
-                p.append(transform(alt=alt, az=az, latitude=latitude))
-            for i in range(1, len(p)):
-                r_a = radius(dec=p[i - 1][1] / unit_deg, latitude=latitude)
-                r_b = radius(dec=p[i][1] / unit_deg, latitude=latitude)
-                # with col grey50
-                context.move_to(**pos(r_a, p[i - 1][0]))
-                context.line_to(**pos(r_b, p[i][0]))
+            path = [transform(alt=alt, az=az, latitude=latitude) for az in arange(0, 360.5, 1)]
+            for i, p in enumerate(path):
+                r_b = radius(dec=p[1] / unit_deg, latitude=latitude)
+                if i == 0:
+                    context.move_to(**pos(r_b, p[0]))
+                else:
+                    context.line_to(**pos(r_b, p[0]))
+        context.stroke(color=(0.5, 0.5, 0.5, 1))
 
         # Draw lines marking S,SSE,SE,ESE,E, etc
+        context.begin_path()
         for az in arange(0, 359, 22.5):
-            p = []
-            for alt in arange(0, 90.1, 1):
-                p.append(transform(alt=alt, az=az, latitude=latitude))
-            for i in range(1, len(p)):
-                r_a = radius(dec=p[i - 1][1] / unit_deg, latitude=latitude)
-                r_b = radius(dec=p[i][1] / unit_deg, latitude=latitude)
-                # with col grey50
-                context.move_to(**pos(r_a, p[i - 1][0]))
-                context.line_to(**pos(r_b, p[i][0]))
+            path = [transform(alt=alt, az=az, latitude=latitude) for alt in arange(0, 90.1, 1)]
+            for i, p in enumerate(path):
+                r_b = radius(dec=p[1] / unit_deg, latitude=latitude)
+                if i == 0:
+                    context.move_to(**pos(r_b, p[0]))
+                else:
+                    context.line_to(**pos(r_b, p[0]))
+        context.stroke(color=(0.5, 0.5, 0.5, 1))
 
         # Gluing labels
-        def cardinal(dir, ang):
-            pp = transform(az=0, alt=ang - 0.01, latitude=latitude)
+        def make_gluing_label(azimuth):
+            pp = transform(alt=0, az=azimuth - 0.01, latitude=latitude)
             r = radius(dec=pp[1] / unit_deg, latitude=latitude)
             p = pos(r, pp[0])
 
-            pp2 = transform(alt=0, az=ang + 0.01, latitude=latitude)
+            pp2 = transform(alt=0, az=azimuth + 0.01, latitude=latitude)
             r2 = radius(dec=pp2[1] / unit_deg, latitude=latitude)
             p2 = pos(r2, pp2[0])
 
             p3 = [p2[i] - p[i] for i in ('x', 'y')]
-            tr = -unit_rev / 4 - atan2(p3[0], p3[1])
-            context.text(text=dir, x=p['x'], y=p['y'], h_align=0, v_align=0, gap=unit_mm, rotation=tr)
+            tr = -unit_rev/4 - atan2(p3[0], p3[1])
 
-        glue_text = text[language]["glue_here"]
+            context.text(text=text[language]["glue_here"],
+                         x=p['x'], y=p['y'],
+                         h_align=0, v_align=1, gap=unit_mm, rotation=tr)
 
-        # set font bold here
-        cardinal(glue_text, 0)
-        cardinal(glue_text, 90)
-        cardinal(glue_text, 180)
-        cardinal(glue_text, 270)
-
-        # White out central hole
-        context.circle(centre_x=0, centre_y=0, radius=central_hole_size)  # w fillc white
+        context.set_font_style(bold=True)
+        context.set_color(r=0, g=0, b=0)
+        make_gluing_label(azimuth=0)
+        make_gluing_label(azimuth=90)
+        make_gluing_label(azimuth=180)
+        make_gluing_label(azimuth=270)
 
 
 # Do it right away if we're run as a script

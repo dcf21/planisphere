@@ -21,9 +21,9 @@
 Render the holder for the planisphere.
 """
 
-from math import sin, cos, atan2, asin, hypot
+from math import pi, sin, cos, atan2, asin, hypot
 
-from constants import unit_deg, unit_rev, unit_cm, unit_mm, r_1, r_2, fold_gap, central_hole_size
+from constants import unit_deg, unit_rev, unit_cm, unit_mm, r_1, r_2, fold_gap, central_hole_size, line_width_base
 from constants import radius, transform, pos
 from graphics_context import BaseComponent
 from numpy import arange
@@ -42,18 +42,23 @@ class Holder(BaseComponent):
         """
         return "holder"
 
-    def bounding_box(self):
+    def bounding_box(self, settings):
         """
         Return the bounding box of the canvas area used by this component.
 
+        :param settings:
+            A dictionary of settings required by the renderer.
         :return:
          Dictionary with the elements 'x_min', 'x_max', 'y_min' and 'y_max' set
         """
+
+        h = r_1 + fold_gap
+
         return {
-            'x_min': -50 * unit_cm,
-            'x_max': 50 * unit_cm,
-            'y_min': -50 * unit_cm,
-            'y_max': 50 * unit_cm
+            'x_min': -r_1 - 4 * unit_mm,
+            'x_max': r_1 + 4 * unit_mm,
+            'y_min': -r_2 - h - 4 * unit_mm,
+            'y_max': h + 1.2 * unit_cm
         }
 
     def do_rendering(self, settings, context):
@@ -76,36 +81,50 @@ class Holder(BaseComponent):
 
         a = 6 * unit_cm
         h = r_1 + fold_gap
+        context.begin_path()
         context.move_to(x=-r_1, y=0)
-        context.line_to(x=r_1, y=0)  # with lt 2)
-        context.move_to(x=-r_1, y=-a)
-        context.line_to(x=-r_1, y=a)
-        context.move_to(x=r_1, y=-a)
-        context.line_to(x=r_1, y=a)
+        context.line_to(x=r_1, y=0)
+        context.stroke(dotted=True)
+        context.begin_path()
+        context.move_to(x=-r_1, y=a)
+        context.line_to(x=-r_1, y=-a)
+        context.move_to(x=r_1, y=a)
+        context.line_to(x=r_1, y=-a)
+        context.stroke(dotted=False)
 
         theta = unit_rev / 2 - atan2(r_1, h - a)
-        context.arc(centre_x=0, centre_y=h, radius=r_2, arc_from=-theta, arc_to=theta)
-        context.move_to(x=-r_2 * sin(theta), y=h + r_2 * cos(theta))
-        context.line_to(x=-r_1, y=a)
-        context.move_to(x=r_2 * sin(theta), y=h + r_2 * cos(theta))
-        context.line_to(x=r_1, y=a)
+        context.begin_path()
+        context.arc(centre_x=0, centre_y=-h, radius=r_2, arc_from=-theta - pi / 2, arc_to=theta - pi / 2)
+        context.move_to(x=-r_2 * sin(theta), y=-h - r_2 * cos(theta))
+        context.line_to(x=-r_1, y=-a)
+        context.move_to(x=r_2 * sin(theta), y=-h - r_2 * cos(theta))
+        context.line_to(x=r_1, y=-a)
+        context.stroke()
 
         # Viewing window
         x0 = (0, h)
-        for az in arange(0, 360.5, 1):
+        context.begin_path()
+        for i, az in enumerate(arange(0, 360.5, 1)):
             pp = transform(alt=0, az=az, latitude=latitude)
             r = radius(dec=pp[1] / unit_deg, latitude=latitude)
             p = pos(r=r, t=pp[0])
-            if az == 0:
-                context.move_to(x0[0] + p['x'], x0[1] + p['y'])
+            if i == 0:
+                context.move_to(x0[0] + p['x'], -x0[1] + p['y'])
             else:
-                context.line_to(x0[0] + p['x'], x0[1] + p['y'])
-        # polygon p with fillc grey80
+                context.line_to(x0[0] + p['x'], -x0[1] + p['y'])
+        context.stroke()
+        context.fill(color=(0, 0, 0, 0.2))
 
         instructions = text[language]["cut_out_instructions"]
-        context.text(text="\parbox{10cm}{%s}" % instructions,
-                     x=0, y=h + r_1 * 0.4,
-                     h_align=0, v_align=0, gap=0, rotation=0)
+        context.set_color(r=0, g=0, b=0, alpha=1)
+        context.text_wrapped(text=instructions[0],
+                             width=6 * unit_cm, justify=0,
+                             x=0, y=-h - r_1 * 0.4,
+                             h_align=0, v_align=0, rotation=0)
+        context.text_wrapped(text=instructions[1],
+                             width=6 * unit_cm, justify=0,
+                             x=0, y=-h - r_1 * 0.3,
+                             h_align=0, v_align=0, rotation=0)
 
         # Cardinal points
         def cardinal(dir, ang):
@@ -120,9 +139,10 @@ class Holder(BaseComponent):
             p3 = [p2[i] - p[i] for i in ('x', 'y')]
             tr = -unit_rev / 4 - atan2(p3[0], p3[1])
 
-            context.text(text=dir, x=x0[0] + p['x'], y=x0[1] + p['y'], h_align=0, v_align=0, gap=unit_mm, rotation=tr)
+            context.text(text=dir, x=x0[0] + p['x'], y=-x0[1] + p['y'],
+                         h_align=0, v_align=1, gap=unit_mm, rotation=tr)
 
-        # set font bold
+        context.set_font_style(bold=True)
         txt = text[language]['cardinal_points']['w']
         cardinal(txt, 180 if not is_southern else 0)
 
@@ -141,14 +161,18 @@ class Holder(BaseComponent):
         r_3 = r_2 - 2 * unit_mm
         r_4 = r_2 - 3 * unit_mm
         r_5 = r_2 - 4 * unit_mm
-        r_6 = r_2 - 5 * unit_mm
+        r_6 = r_2 - 5.5 * unit_mm
 
-        context.arc(centre_x=0, centre_y=h, radius=r_3, arc_from=-theta, arc_to=theta)
-        context.arc(centre_x=0, centre_y=h, radius=r_4, arc_from=-theta, arc_to=theta)
+        context.begin_path()
+        context.arc(centre_x=0, centre_y=-h, radius=r_3, arc_from=-theta - pi / 2, arc_to=theta - pi / 2)
+        context.begin_sub_path()
+        context.arc(centre_x=0, centre_y=-h, radius=r_4, arc_from=-theta - pi / 2, arc_to=theta - pi / 2)
+        context.stroke()
 
-        # with linewidth (r_4-r_3)/(0.2*mm)
         for i in arange(-theta, theta, 2 * dash):
-            context.arc(centre_x=0, centre_y=h, radius=(r_3 + r_4) / 2, arc_from=i, arc_to=i + dash)
+            context.begin_path()
+            context.arc(centre_x=0, centre_y=-h, radius=(r_3 + r_4) / 2, arc_from=i - pi / 2, arc_to=i + dash - pi / 2)
+            context.stroke(line_width=(r_3 - r_4) / line_width_base)
 
         for hr in arange(-7, 7.1, 1):
             txt = "{:.0f}{}".format(hr if (hr > 0) else hr + 12,
@@ -158,67 +182,91 @@ class Holder(BaseComponent):
             if hr == 0:
                 txt = ""
             t = unit_rev / 24 * hr * (-1 if not is_southern else 1)
-            context.move_to(x=r_3 * sin(t), y=h + r_3 * cos(t))
-            context.line_to(x=r_5 * sin(t), y=h + r_5 * cos(t))
-            context.text(text=txt, x=r_6 * sin(t), y=h + r_6 * cos(t), h_align=0, v_align=0, gap=0, rotation=-t)
+
+            context.begin_path()
+            context.move_to(x=r_3 * sin(t), y=-h - r_3 * cos(t))
+            context.line_to(x=r_5 * sin(t), y=-h - r_5 * cos(t))
+            context.stroke(line_width=1)
+            context.text(text=txt, x=r_6 * sin(t), y=-h - r_6 * cos(t), h_align=0, v_align=0, gap=0, rotation=t)
 
         # Back edge
         b = unit_cm
         t1 = atan2(h - a, r_1)
         t2 = asin(b / hypot(r_1, h - a))
-        context.move_to(x=-r_1, y=-a)
-        context.line_to(x=-b * sin(t1 + t2), y=-h - b * cos(t1 + t2))
-        context.move_to(x=r_1, y=-a)
-        context.line_to(x=b * sin(t1 + t2), y=-h - b * cos(t1 + t2))
-        context.arc(centre_x=0, centre_y=-h, radius=b, arc_from=unit_rev / 2 - (t1 + t2),
-                    arc_to=unit_rev / 2 + (t1 + t2))
+        context.begin_path()
+        context.move_to(x=-r_1, y=a)
+        context.line_to(x=-b * sin(t1 + t2), y=h + b * cos(t1 + t2))
+        context.move_to(x=r_1, y=a)
+        context.line_to(x=b * sin(t1 + t2), y=h + b * cos(t1 + t2))
+        context.arc(centre_x=0, centre_y=h, radius=b, arc_from=unit_rev / 2 - (t1 + t2) - pi / 2,
+                    arc_to=unit_rev / 2 + (t1 + t2) - pi / 2)
+        context.stroke(line_width=1)
 
         # Title
         if latitude < 64:
             context.set_font_size(3.0)
             txt = text[language]['title']
-            context.text(text="%s %d$^\circ$%s" % (txt, latitude, "N" if not is_southern else "S"),
-                         x=0, y=4.8 * unit_cm,
-                         h_align=0, v_align=0, gap=0, rotation=0)
+            context.text(
+                text="%s %d\u00B0%s" % (txt, latitude, "N" if not is_southern else "S"),
+                x=0, y=-4.8 * unit_cm,
+                h_align=0, v_align=0, gap=0, rotation=0)
 
+            context.set_font_size(1.6)
+            context.text(
+                text="1",
+                x=-5.0 * unit_cm, y=-4.0 * unit_cm,
+                h_align=0, v_align=0, gap=0, rotation=0)
             context.set_font_size(0.85)
-            txt = text[language]['instructions_1']
-            context.text(text="""\parbox{5.6cm}{\centerline{\Huge 1}\vspace{1mm}%s}""" % txt,
-                         x=-5.0 * unit_cm, y=3.7 * unit_cm,
-                         h_align=0, v_align=0, gap=0, rotation=0)
+            context.text_wrapped(
+                text=text[language]['instructions_1'],
+                x=-5.0 * unit_cm, y=-3.4 * unit_cm, width=4.5 * unit_cm, justify=-1,
+                h_align=0, v_align=1, rotation=0)
 
+            context.set_font_size(1.6)
+            context.text(
+                text="2",
+                x=0, y=-4.0 * unit_cm,
+                h_align=0, v_align=0, gap=0, rotation=0)
             context.set_font_size(0.85)
-            txt = text[language]['instructions_2'].format(cardinal="north" if not is_southern else "south")
-            context.text(text="""\parbox{5.6cm}{\centerline{\Huge 2}\vspace{1mm}%s}""" % txt,
-                         x=0, y=3.7 * unit_cm,
-                         h_align=0, v_align=0, gap=0, rotation=0)
+            context.text_wrapped(
+                text=text[language]['instructions_2'].format(cardinal="north" if not is_southern else "south"),
+                x=0, y=-3.4 * unit_cm, width=4.5 * unit_cm, justify=-1,
+                h_align=0, v_align=1, rotation=0)
 
+            context.set_font_size(1.6)
+            context.text(
+                text="3",
+                x=5.0 * unit_cm, y=-4.0 * unit_cm,
+                h_align=0, v_align=0, gap=0, rotation=0)
             context.set_font_size(0.85)
-            txt = text[language]['instructions_3']
-            context.text(text="""\parbox{5.6cm}{\centerline{\Huge 3}\vspace{1mm}%s}""" % txt,
-                         x=5.0 * unit_cm, y=3.7 * unit_cm,
-                         h_align=0, v_align=0, gap=0, rotation=0)
+            context.text_wrapped(
+                text=text[language]['instructions_3'],
+                x=5.0 * unit_cm, y=-3.4 * unit_cm, width=4.5 * unit_cm, justify=-1,
+                h_align=0, v_align=1, rotation=0)
         else:
             context.set_font_size(3.0)
             txt = text[language]['title']
-            context.text(text="%s %d$^\circ$%s" % (txt, latitude, "N" if not is_southern else "S"),
-                         x=0, y=2.4 * unit_cm,
-                         h_align=0, v_align=0, gap=0, rotation=0)
+            context.text(
+                text="%s %d\u00B0%s" % (txt, latitude, "N" if not is_southern else "S"),
+                x=0, y=-2.4 * unit_cm,
+                h_align=0, v_align=0, gap=0, rotation=0)
 
         context.set_font_size(0.9)
-        txt = text[language]['instructions_4']
-        context.text(text="""\\begin{minipage}{12cm}%s\\end{minipage}""" % txt,
-                     x=0, y=-6 * unit_cm,
-                     h_align=0, v_align=0, gap=0, rotation=0.5 * unit_rev)
+        context.text_wrapped(
+            text=text[language]['instructions_4'],
+            x=0, y=5.5 * unit_cm, width=12 * unit_cm, justify=-1,
+            h_align=0, v_align=1, rotation=0.5 * unit_rev)
 
         txt = text[language]['more_info']
         context.set_font_size(0.8)
-        context.text(text=txt, x=0, y=0.5 * unit_cm, h_align=0, v_align=0, gap=0, rotation=0)
+        context.text(text=txt, x=0, y=-0.5 * unit_cm, h_align=0, v_align=0, gap=0, rotation=0)
         context.set_font_size(0.8)
-        context.text(text=txt, x=0, y=-0.5 * unit_cm, h_align=0, v_align=0, gap=0, rotation=180)
+        context.text(text=txt, x=0, y=0.5 * unit_cm, h_align=0, v_align=0, gap=0, rotation=pi)
 
-        # White out central hole
-        context.circle(centre_x=0, centre_y=-h, radius=central_hole_size)  # w fillc white
+        # Draw central hole
+        context.begin_path()
+        context.circle(centre_x=0, centre_y=h, radius=central_hole_size)
+        context.stroke()
 
 
 # Do it right away if we're run as a script

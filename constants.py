@@ -23,7 +23,7 @@ The file contains global settings for the planisphere.
 from math import pi, sin, cos, atan2, asin
 
 # Units
-dots_per_inch = 50
+dots_per_inch = 200
 
 unit_m = 1.
 unit_cm = 1. / 100
@@ -37,7 +37,8 @@ unit_rev = 2 * pi
 margin_fraction = 1.02
 
 # Font size
-font_size_base = 0.9
+font_size_base = 3.2 * unit_mm
+line_width_base = 0.2 * unit_mm
 
 # Outer radius of planisphere
 r_1 = 8.0 * unit_cm
@@ -85,4 +86,4 @@ def transform(alt, az, latitude):
 
 
 def pos(r, t):
-    return {'x': r * cos(t), 'y': r * sin(-t)}
+    return {'x': r * cos(t), 'y': -r * sin(-t)}

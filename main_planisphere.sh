@@ -18,11 +18,12 @@
 # ----------------------------------------------------------------------------
 
 # Delete any previous output from running this script
-rm -Rf planisphere_parts planispheres
+rm -Rf __pycache__ *.pyc output
 rm -Rf doc/*.aux doc/*.dvi doc/*.log doc/*.pdf doc/*.ps doc/tmp doc/*.out
 
 # Run the python 3 script which generates planisphere models for a wide range of latitudes
 python3 planisphere.py
 
 # Clean up temporary files which get made along the way
+rm -Rf __pycache__ *.pyc
 rm -Rf doc/*.aux doc/*.dvi doc/*.log doc/*.pdf doc/*.ps doc/tmp doc/*.out

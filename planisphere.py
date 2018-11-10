@@ -26,6 +26,8 @@ to build a planisphere for that latitude, and instructions as to how to put them
 """
 
 import os
+import subprocess
+import time
 
 import text
 from starwheel import StarWheel
@@ -84,19 +86,23 @@ for language in text.text:
         os.system("cp {dir_parts}/holder_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/holder.pdf".format(**subs))
         os.system("cp {dir_parts}/alt_az_grid_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/altaz.pdf".format(**subs))
 
-        open("doc/tmp/lat.tex", "wt").write(r"${abs_lat:d}^\circ${ns}".format(**subs))
+        with open("doc/tmp/lat.tex", "wt") as f:
+            f.write(r"${abs_lat:d}^\circ${ns}".format(**subs))
+
+        # Wait for cairo to wake up and close the files
+        time.sleep(1)
 
         # Build LaTeX documentation
         for build_pass in range(3):
-            os.system("cd doc ; pdflatex planisphere{lang_short}.tex".format(**subs))
+            subprocess.check_output("cd doc ; pdflatex planisphere{lang_short}.tex".format(**subs), shell=True)
 
         os.system("mv doc/planisphere{lang_short}.pdf "
-                  "output/planispheres/planisphere_{abs_lat:02d}{ns}_{lang}.pdf".format(**subs))
+                  "{dir_out}/planisphere_{abs_lat:02d}{ns}_{lang}.pdf".format(**subs))
 
         # For the English language planisphere, create a symlink with no language suffix in the filename
         if language == "en":
-            os.system("ln -s doc/planisphere_{abs_lat:02d}{ns}_en.pdf "
-                      "output/planispheres/planisphere_{abs_lat:02d}{ns}.pdf".format(**subs))
+            os.system("ln -s planisphere_{abs_lat:02d}{ns}_en.pdf "
+                      "{dir_out}/planisphere_{abs_lat:02d}{ns}.pdf".format(**subs))
 
         # Clean up the rubbish that LaTeX leaves behind
         os.system("cd doc ; rm -f *.aux *.log *.dvi *.ps *.pdf")
