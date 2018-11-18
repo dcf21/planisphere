@@ -113,6 +113,8 @@ class StarWheel(BaseComponent):
             if is_southern:
                 ra1 = -float(ra1)
                 ra2 = -float(ra2)
+                dec1 = -float(dec1)
+                dec2 = -float(dec2)
 
             r_point_1 = radius(dec=float(dec1), latitude=latitude)
             if r_point_1 > r_2:
@@ -146,6 +148,7 @@ class StarWheel(BaseComponent):
             dec = float(dec)
             if is_southern:
                 ra *= -1
+                dec *= -1
 
             r = radius(dec=dec, latitude=latitude)
             if r > r_2:
@@ -178,6 +181,8 @@ class StarWheel(BaseComponent):
 
             if is_southern:
                 ra = -ra
+                dec = -dec
+
             name2 = re.sub("@", " ", name)
             r = radius(dec=dec, latitude=latitude)
             if r > r_2:

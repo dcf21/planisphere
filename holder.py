@@ -143,6 +143,7 @@ class Holder(BaseComponent):
                          h_align=0, v_align=1, gap=unit_mm, rotation=tr)
 
         context.set_font_style(bold=True)
+
         txt = text[language]['cardinal_points']['w']
         cardinal(txt, 180 if not is_southern else 0)
 
@@ -154,6 +155,8 @@ class Holder(BaseComponent):
 
         txt = text[language]['cardinal_points']['n']
         cardinal(txt, 90 if not is_southern else 270)
+
+        context.set_font_style(bold=False)
 
         # Clock face
         theta = unit_rev / 24 * 7  # 5pm -> 7am
@@ -203,13 +206,15 @@ class Holder(BaseComponent):
         context.stroke(line_width=1)
 
         # Title
-        if latitude < 64:
+        if latitude < 56:
             context.set_font_size(3.0)
             txt = text[language]['title']
+            context.set_font_style(bold=True)
             context.text(
                 text="%s %d\u00B0%s" % (txt, latitude, "N" if not is_southern else "S"),
                 x=0, y=-4.8 * unit_cm,
                 h_align=0, v_align=0, gap=0, rotation=0)
+            context.set_font_style(bold=False)
 
             context.set_font_size(1.6)
             context.text(
@@ -246,10 +251,12 @@ class Holder(BaseComponent):
         else:
             context.set_font_size(3.0)
             txt = text[language]['title']
+            context.set_font_style(bold=True)
             context.text(
                 text="%s %d\u00B0%s" % (txt, latitude, "N" if not is_southern else "S"),
-                x=0, y=-2.4 * unit_cm,
+                x=0, y=-1.8 * unit_cm,
                 h_align=0, v_align=0, gap=0, rotation=0)
+            context.set_font_style(bold=False)
 
         context.set_font_size(0.9)
         context.text_wrapped(
