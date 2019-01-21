@@ -186,7 +186,7 @@ class StarWheel(BaseComponent):
                 ra = -ra
                 dec = -dec
 
-            name2 = re.sub("@", " ", name)
+            name2 = re.sub("_", " ", name)
             r = radius(dec=dec, latitude=latitude)
             if r > r_2:
                 continue
