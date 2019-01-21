@@ -32,7 +32,7 @@ def fetch_command_line_arguments(default_filename):
     """
 
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--latitude', dest='latitude', default=52,
+    parser.add_argument('--latitude', dest='latitude', type=int, default=52,
                         help="The latitude to create a planisphere for.")
     parser.add_argument('--format', dest='img_format', choices=["pdf", "png", "svg"], default="png",
                         help="The image format to create.")
