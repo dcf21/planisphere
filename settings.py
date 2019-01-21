@@ -23,7 +23,7 @@ Define a common command-line interface which is shared between all the scripts.
 import argparse
 
 
-def fetch_command_line_arguments(default_filename):
+def fetch_command_line_arguments(default_filename=''):
     """
     Read input parameters from the command line
 
