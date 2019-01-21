@@ -116,7 +116,7 @@ class Holder(BaseComponent):
         context.fill(color=(0, 0, 0, 0.2))
 
         instructions = text[language]["cut_out_instructions"]
-        context.set_color(r=0, g=0, b=0, alpha=1)
+        context.set_color(color=(0, 0, 0, 1))
         context.text_wrapped(text=instructions[0],
                              width=6 * unit_cm, justify=0,
                              x=0, y=-h - r_1 * 0.4,

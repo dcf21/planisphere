@@ -38,10 +38,13 @@ def fetch_command_line_arguments(default_filename):
                         help="The image format to create.")
     parser.add_argument('--output', dest='filename', default=default_filename,
                         help="Filename for output, without a file type suffix.")
+    parser.add_argument('--theme', dest='theme', choices=["default", "dark"], default="default",
+                        help="Color theme to be used in the planisphere.")
     args = parser.parse_args()
 
     return {
         "latitude": args.latitude,
         "img_format": args.img_format,
-        "filename": args.filename
+        "filename": args.filename,
+        "theme": args.theme
     }

@@ -154,7 +154,7 @@ class AltAzGrid(BaseComponent):
                          h_align=0, v_align=1, gap=unit_mm, rotation=tr)
 
         context.set_font_style(bold=True)
-        context.set_color(r=0, g=0, b=0)
+        context.set_color(color=(0, 0, 0, 1))
         make_gluing_label(azimuth=0)
         make_gluing_label(azimuth=90)
         make_gluing_label(azimuth=180)

@@ -31,6 +31,7 @@ from graphics_context import BaseComponent
 from numpy import arange
 from settings import fetch_command_line_arguments
 from text import text
+from themes import themes
 
 
 class StarWheel(BaseComponent):
@@ -75,6 +76,7 @@ class StarWheel(BaseComponent):
         is_southern = settings['latitude'] < 0
         language = settings['language']
         latitude = abs(settings['latitude'])
+        theme = themes[settings['theme']]
 
         context.set_font_size(1.2)
 
@@ -86,9 +88,10 @@ class StarWheel(BaseComponent):
 
         context.begin_path()
         context.circle(centre_x=0, centre_y=0, radius=r_1)  # Outer edge of planisphere
+        context.fill(color=theme['background'])
         context.begin_sub_path()
         context.circle(centre_x=0, centre_y=0, radius=central_hole_size)  # White out central hole
-        context.stroke()
+        context.stroke(color=theme['edge'])
         context.clip()
 
         for dec in arange(-80, 85, 15):
@@ -97,7 +100,7 @@ class StarWheel(BaseComponent):
                 continue
             context.begin_path()
             context.circle(centre_x=0, centre_y=0, radius=r)
-            context.stroke(color=(0.75, 0.75, 0.75, 1))
+            context.stroke(color=theme['grid'])
 
         # Draw constellation stick figures
         for line in open("raw_data/constellation_stick_figures.dat", "rt"):
@@ -134,7 +137,7 @@ class StarWheel(BaseComponent):
             context.begin_path()
             context.move_to(x=p1[0], y=p1[1])
             context.line_to(x=p2[0], y=p2[1])
-            context.stroke(color=(0.25, 0.25, 0.25, 1), line_width=1, dotted=True)
+            context.stroke(color=theme['stick'], line_width=1, dotted=True)
 
         # Draw stars from Yale Bright Star Catalogue
         for star_descriptor in fetch_bright_star_list()['stars'].values():
@@ -156,11 +159,11 @@ class StarWheel(BaseComponent):
             context.begin_path()
             context.circle(centre_x=-r * cos(ra * unit_deg), centre_y=-r * sin(ra * unit_deg),
                            radius=0.18 * unit_mm * (5 - mag))
-            context.fill(color=(0, 0, 0, 1))
+            context.fill(color=theme['star'])
 
         # Write constellation names
         context.set_font_size(0.7)
-        context.set_color(r=0, g=0, b=0)
+        context.set_color(theme['constellation'])
 
         for line in open("raw_data/constellation_names.dat"):
             line = line.strip()
@@ -207,7 +210,7 @@ class StarWheel(BaseComponent):
 
         # Write month names
         context.set_font_size(1.8)
-        context.set_color(r=0, g=0, b=0)
+        context.set_color(theme['date'])
         for mn, (mlen, name) in enumerate(text[language]['months']):
             theta = s * theta2014(calendar.julian_day(year=2014, month=mn+1, day=mlen // 2, hour=12, minute=0, sec=0))
 
@@ -246,7 +249,7 @@ class StarWheel(BaseComponent):
 
         context.begin_path()
         context.circle(centre_x=0, centre_y=0, radius=r_2)
-        context.stroke(color=(0, 0, 0, 1), line_width=1, dotted=False)
+        context.stroke(color=theme['date'], line_width=1, dotted=False)
 
 
 # Do it right away if we're run as a script
@@ -257,7 +260,8 @@ if __name__ == "__main__":
     # Render the star wheel for the planisphere
     StarWheel(settings={
         'latitude': arguments['latitude'],
-        'language': 'en'
+        'language': 'en',
+        'theme': arguments['theme'],
     }).render_to_file(
         filename=arguments['filename'],
         img_format=arguments['img_format'],
