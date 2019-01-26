@@ -33,10 +33,14 @@ import text
 from starwheel import StarWheel
 from holder import Holder
 from alt_az import AltAzGrid
+from settings import fetch_command_line_arguments
 
 # Create output directory
 os.system("rm -Rf output")
 os.system("mkdir -p output/planispheres output/planisphere_parts")
+
+arguments = fetch_command_line_arguments()
+theme = arguments['theme']
 
 # Render planisphere in all available languages
 for language in text.text:
@@ -64,6 +68,7 @@ for language in text.text:
         settings = {
             'language': language,
             'latitude': latitude,
+            'theme': theme,
         }
 
         # Render the various parts of the planisphere

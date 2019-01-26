@@ -27,7 +27,7 @@
 
 Andromeda  1.5 46  1.5 39  23.5 37  0.5 35
 Antlia  10.2 -33
-Apus  16 -75  17.5 -75  14.5 -75
+# Apus  16 -75  17.5 -75  14.5 -75
 Aquarius  23 -12.5  23.1 -11  22.5 -22  21.3 1
 Aquila  19.9 -3  19.3 8  19.2 -2
 Ara  17.4 -52  17.2 -48  17.2 -62
@@ -46,7 +46,7 @@ Cassiopeia  2 68  3 72  0.2 52
 Centaurus  13 -45  12 -38  13 -53
 Cepheus  22 77  22 65  23.5 82  2.5 82
 Cetus  2 -5  2.2 -13  2.2 -15
-Chamaeleon  12.2 -78
+# Chamaeleon  12.2 -78
 Circinus  14.4 -66
 Columba  6 -37.5
 Coma_Berenices  12.75 28
@@ -77,12 +77,12 @@ Libra  15.2 -18  15.2 -12
 Lupus  15.6 -34.5  14.9 -52
 Lynx  8.5 40  7.8 53  6.8 58
 Lyra  18.8 42
-Mensa  5.5 -77
+# Mensa  5.5 -77
 Microscopium  21 -38
 Monoceros  7.1 -2  6.75 5
 Musca  12.6 -70
 Norma  16.1 -50
-Octans  21.5 -82 15.5 -87
+# Octans  21.5 -82 15.5 -87
 Ophiuchus  17.2 -6  17.6 8  17.1 -21
 Orion  5.3 11  5.9 4  5.6 -8
 Pavo  19.8 -64
@@ -114,4 +114,3 @@ Vela  9.9 -47
 Virgo 13.5 -5  14 2  12.5 3  13.7 -20
 Volans  7.8 -68
 Vulpecula  20.8 27
-

@@ -37,7 +37,7 @@ unit_rev = 2 * pi
 margin_fraction = 1.02
 
 # Font size
-font_size_base = 3.2 * unit_mm
+font_size_base = 2.6 * unit_mm
 line_width_base = 0.2 * unit_mm
 
 # Outer radius of planisphere

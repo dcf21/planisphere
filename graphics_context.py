@@ -188,14 +188,14 @@ class GraphicsContext:
         if line_width is not None:
             self.set_line_width(line_width=line_width)
         if color is not None:
-            self.set_color(r=color[0], g=color[1], b=color[2], alpha=color[3])
+            self.set_color(color=color)
         if dotted is not None:
             self.set_line_style(dotted=dotted)
         self.context.stroke_preserve()
 
     def fill(self, color=None):
         if color is not None:
-            self.set_color(r=color[0], g=color[1], b=color[2], alpha=color[3])
+            self.set_color(color=color)
         self.context.fill_preserve()
 
     def clip(self):
@@ -210,22 +210,16 @@ class GraphicsContext:
     def rectangle(self, x0, y0, x1, y1):
         self.context.rectangle(x=x0, y=y0, width=x1 - x0, height=y1 - y0)
 
-    def set_color(self, r, g, b, alpha=1):
+    def set_color(self, color):
         """
         Set the colour used for both stroke and fill operations.
 
-        :param r:
-            Red component; floating point number between 0 and 1.
-        :param g:
-            Green component; floating point number between 0 and 1.
-        :param b:
-            Blue component; floating point number between 0 and 1.
-        :param alpha:
-            Alpha component ; floating point number between 0 and 1.
+        :param color:
+            Red/green/blue/alpha; floating point number between 0 and 1.
         :return:
             None
         """
-        self.context.set_source_rgba(red=r, green=g, blue=b, alpha=alpha)
+        self.context.set_source_rgba(red=color[0], green=color[1], blue=color[2], alpha=color[3])
 
     def set_line_style(self, dotted=None):
         """

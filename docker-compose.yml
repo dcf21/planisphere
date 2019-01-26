@@ -1,0 +1,8 @@
+version: '3'
+services:
+  python:
+    build: .
+    volumes:
+    - .:/code
+    command: ./main_planisphere.sh --theme dark
+    # command: python3 ./starwheel.py --latitude -30 --format pdf --theme dark
