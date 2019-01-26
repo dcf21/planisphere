@@ -21,14 +21,15 @@
 Render the star wheel for the planisphere.
 """
 
-from math import pi, sin, cos, atan2, hypot
 import re
-import calendar
+from math import pi, sin, cos, atan2, hypot
 
+from numpy import arange
+
+import calendar
 from bright_stars_process import fetch_bright_star_list
 from constants import unit_deg, unit_rev, unit_mm, unit_cm, r_1, r_gap, central_hole_size, radius
 from graphics_context import BaseComponent
-from numpy import arange
 from settings import fetch_command_line_arguments
 from text import text
 from themes import themes
@@ -212,7 +213,7 @@ class StarWheel(BaseComponent):
         context.set_font_size(2.3)
         context.set_color(theme['date'])
         for mn, (mlen, name) in enumerate(text[language]['months']):
-            theta = s * theta2014(calendar.julian_day(year=2014, month=mn+1, day=mlen // 2, hour=12, minute=0, sec=0))
+            theta = s * theta2014(calendar.julian_day(year=2014, month=mn + 1, day=mlen // 2, hour=12, minute=0, sec=0))
 
             # We supply circular_text with a negative radius here, as a fudge to orientate the text with bottom-inwards
             context.circular_text(text=name, centre_x=0, centre_y=0, radius=-(r_1 * 0.65 + r_2 * 0.35),
@@ -223,7 +224,7 @@ class StarWheel(BaseComponent):
         for mn, (mlen, name) in enumerate(text[language]['months']):
             # Tick marks
             for d in range(1, mlen + 1):
-                theta = s * theta2014(calendar.julian_day(year=2014, month=mn+1, day=d, hour=0, minute=0, sec=0))
+                theta = s * theta2014(calendar.julian_day(year=2014, month=mn + 1, day=d, hour=0, minute=0, sec=0))
                 R = r_3 if (d % 5) else r_4  # Multiples of 5 get longer ticks
                 if d == mlen:
                     R = r_5
@@ -234,18 +235,18 @@ class StarWheel(BaseComponent):
 
             # Numeric labels
             for d in [10, 20, mlen]:
-                theta = s * theta2014(calendar.julian_day(year=2014, month=mn+1, day=d, hour=0, minute=0, sec=0))
+                theta = s * theta2014(calendar.julian_day(year=2014, month=mn + 1, day=d, hour=0, minute=0, sec=0))
                 context.set_font_size(1.2)
                 theta2 = theta + 0.15 * unit_deg
                 context.text(text="%d" % (d / 10), x=r_6 * cos(theta2), y=-r_6 * sin(theta2),
                              h_align=1, v_align=0,
                              gap=0,
-                             rotation=-theta + pi/2)
+                             rotation=-theta + pi / 2)
                 theta2 = theta - 0.15 * unit_deg
                 context.text(text="%d" % (d % 10), x=r_6 * cos(theta2), y=-r_6 * sin(theta2),
                              h_align=-1, v_align=0,
                              gap=0,
-                             rotation=-theta + pi/2)
+                             rotation=-theta + pi / 2)
 
         context.begin_path()
         context.circle(centre_x=0, centre_y=0, radius=r_2)

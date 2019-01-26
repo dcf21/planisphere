@@ -30,10 +30,10 @@ import subprocess
 import time
 
 import text
-from starwheel import StarWheel
-from holder import Holder
 from alt_az import AltAzGrid
+from holder import Holder
 from settings import fetch_command_line_arguments
+from starwheel import StarWheel
 
 # Create output directory
 os.system("rm -Rf output")

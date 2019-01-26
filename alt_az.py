@@ -23,10 +23,11 @@ Render the optional alt-az grid of the planisphere.
 
 from math import atan2
 
-from constants import unit_deg, unit_rev, unit_mm, central_hole_size, r_1
-from constants import radius, transform, pos
-from graphics_context import BaseComponent
 from numpy import arange
+
+from constants import radius, transform, pos
+from constants import unit_deg, unit_rev, unit_mm, central_hole_size
+from graphics_context import BaseComponent
 from settings import fetch_command_line_arguments
 from text import text
 
@@ -161,7 +162,7 @@ class AltAzGrid(BaseComponent):
             p2 = pos(r2, pp2[0])
 
             p3 = [p2[i] - p[i] for i in ('x', 'y')]
-            tr = -unit_rev/4 - atan2(p3[0], p3[1])
+            tr = -unit_rev / 4 - atan2(p3[0], p3[1])
 
             context.text(text=text[language]["glue_here"],
                          x=p['x'], y=p['y'],

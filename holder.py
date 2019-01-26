@@ -23,10 +23,11 @@ Render the holder for the planisphere.
 
 from math import pi, sin, cos, atan2, asin, hypot
 
-from constants import unit_deg, unit_rev, unit_cm, unit_mm, r_1, r_2, fold_gap, central_hole_size, line_width_base
-from constants import radius, transform, pos
-from graphics_context import BaseComponent
 from numpy import arange
+
+from constants import radius, transform, pos
+from constants import unit_deg, unit_rev, unit_cm, unit_mm, r_1, r_2, fold_gap, central_hole_size, line_width_base
+from graphics_context import BaseComponent
 from settings import fetch_command_line_arguments
 from text import text
 

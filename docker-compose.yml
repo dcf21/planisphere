@@ -3,5 +3,5 @@ services:
   python:
     build: .
     volumes:
-    - .:/code
+      - .:/code
     command: ./main_planisphere.sh --theme default
