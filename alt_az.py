@@ -62,8 +62,13 @@ class AltAzGrid(BaseComponent):
         }
 
         # Trace around horizon, keeping track of minimum and maximum coordinates
-        alt = -12
-        path = [transform(alt=alt, az=az, latitude=latitude) for az in arange(0, 360.5, 1)]
+        alt_edge = -12
+
+        # At latitudes very close to the equator, the point -12 degrees below the horizon is below dec -90!
+        if abs(latitude) < 15:
+            alt_edge = -9
+
+        path = [transform(alt=alt_edge, az=az, latitude=latitude) for az in arange(0, 360.5, 1)]
 
         for p in path:
             r_b = radius(dec=p[1] / unit_deg, latitude=latitude)
@@ -92,9 +97,18 @@ class AltAzGrid(BaseComponent):
 
         context.set_font_size(0.9)
 
+        # Set altitude of outer edge of alt-az grid, including margin for gluing instructions
+        alt_edge = -10
+        azimuth_step = 1
+
+        # At latitudes very close to the equator, the point -12 degrees below the horizon is below dec -90!
+        if abs(latitude) < 15:
+            alt_edge = -8
+            azimuth_step = 0.2
+
         # Draw horizon, and line to cut around edge
-        for alt in (-10, 0):
-            path = [transform(alt=alt, az=az, latitude=latitude) for az in arange(0, 360.5, 1)]
+        for alt in (alt_edge, 0):
+            path = [transform(alt=alt, az=az, latitude=latitude) for az in arange(0, 360.5, azimuth_step)]
 
             context.begin_path()
             for i, p in enumerate(path):
@@ -105,7 +119,7 @@ class AltAzGrid(BaseComponent):
                     context.line_to(**pos(r_b, p[0]))
             context.stroke()
 
-            if alt == -10:
+            if alt == alt_edge:
                 # Create clipping area, excluding central hole
                 context.begin_sub_path()
                 context.circle(centre_x=0, centre_y=0, radius=central_hole_size)

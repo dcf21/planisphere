@@ -209,7 +209,7 @@ class StarWheel(BaseComponent):
             return (d - calendar.julian_day(year=2014, month=3, day=20, hour=16, minute=55, sec=0)) / 365.25 * unit_rev
 
         # Write month names
-        context.set_font_size(1.8)
+        context.set_font_size(2.3)
         context.set_color(theme['date'])
         for mn, (mlen, name) in enumerate(text[language]['months']):
             theta = s * theta2014(calendar.julian_day(year=2014, month=mn+1, day=mlen // 2, hour=12, minute=0, sec=0))
@@ -235,7 +235,7 @@ class StarWheel(BaseComponent):
             # Numeric labels
             for d in [10, 20, mlen]:
                 theta = s * theta2014(calendar.julian_day(year=2014, month=mn+1, day=d, hour=0, minute=0, sec=0))
-                context.set_font_size(1.0)
+                context.set_font_size(1.2)
                 theta2 = theta + 0.15 * unit_deg
                 context.text(text="%d" % (d / 10), x=r_6 * cos(theta2), y=-r_6 * sin(theta2),
                              h_align=1, v_align=0,

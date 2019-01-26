@@ -117,13 +117,9 @@ class Holder(BaseComponent):
 
         instructions = text[language]["cut_out_instructions"]
         context.set_color(color=(0, 0, 0, 1))
-        context.text_wrapped(text=instructions[0],
-                             width=6 * unit_cm, justify=0,
-                             x=0, y=-h - r_1 * 0.4,
-                             h_align=0, v_align=0, rotation=0)
-        context.text_wrapped(text=instructions[1],
-                             width=6 * unit_cm, justify=0,
-                             x=0, y=-h - r_1 * 0.3,
+        context.text_wrapped(text=instructions,
+                             width=4 * unit_cm, justify=0,
+                             x=0, y=-h - r_1 * 0.35,
                              h_align=0, v_align=0, rotation=0)
 
         # Cardinal points
@@ -216,34 +212,34 @@ class Holder(BaseComponent):
                 h_align=0, v_align=0, gap=0, rotation=0)
             context.set_font_style(bold=False)
 
-            context.set_font_size(1.6)
+            context.set_font_size(2)
             context.text(
                 text="1",
                 x=-5.0 * unit_cm, y=-4.0 * unit_cm,
                 h_align=0, v_align=0, gap=0, rotation=0)
-            context.set_font_size(0.85)
+            context.set_font_size(1)
             context.text_wrapped(
                 text=text[language]['instructions_1'],
                 x=-5.0 * unit_cm, y=-3.4 * unit_cm, width=4.5 * unit_cm, justify=-1,
                 h_align=0, v_align=1, rotation=0)
 
-            context.set_font_size(1.6)
+            context.set_font_size(2)
             context.text(
                 text="2",
                 x=0, y=-4.0 * unit_cm,
                 h_align=0, v_align=0, gap=0, rotation=0)
-            context.set_font_size(0.85)
+            context.set_font_size(1)
             context.text_wrapped(
                 text=text[language]['instructions_2'].format(cardinal="north" if not is_southern else "south"),
                 x=0, y=-3.4 * unit_cm, width=4.5 * unit_cm, justify=-1,
                 h_align=0, v_align=1, rotation=0)
 
-            context.set_font_size(1.6)
+            context.set_font_size(2)
             context.text(
                 text="3",
                 x=5.0 * unit_cm, y=-4.0 * unit_cm,
                 h_align=0, v_align=0, gap=0, rotation=0)
-            context.set_font_size(0.85)
+            context.set_font_size(1)
             context.text_wrapped(
                 text=text[language]['instructions_3'],
                 x=5.0 * unit_cm, y=-3.4 * unit_cm, width=4.5 * unit_cm, justify=-1,
@@ -258,16 +254,16 @@ class Holder(BaseComponent):
                 h_align=0, v_align=0, gap=0, rotation=0)
             context.set_font_style(bold=False)
 
-        context.set_font_size(0.9)
+        context.set_font_size(1.1)
         context.text_wrapped(
             text=text[language]['instructions_4'],
             x=0, y=5.5 * unit_cm, width=12 * unit_cm, justify=-1,
             h_align=0, v_align=1, rotation=0.5 * unit_rev)
 
         txt = text[language]['more_info']
-        context.set_font_size(0.8)
+        context.set_font_size(0.9)
         context.text(text=txt, x=0, y=-0.5 * unit_cm, h_align=0, v_align=0, gap=0, rotation=0)
-        context.set_font_size(0.8)
+        context.set_font_size(0.9)
         context.text(text=txt, x=0, y=0.5 * unit_cm, h_align=0, v_align=0, gap=0, rotation=pi)
 
         # Draw central hole

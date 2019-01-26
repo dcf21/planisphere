@@ -150,6 +150,7 @@ class GraphicsContext:
 
         self.base_line_width = line_width_base
         self.base_font_size = font_size_base
+        self.font_size = False
         self.font_bold = False
         self.font_italic = False
         self.line_dotted = False
@@ -247,6 +248,7 @@ class GraphicsContext:
         :return:
             None
         """
+        self.font_size = font_size
         self.context.set_font_size(font_size * self.base_font_size)
 
     def set_font_style(self, italic=None, bold=None):
@@ -439,10 +441,9 @@ class GraphicsContext:
                 else:
                     line = line_new
             # Add last line of text to buffer
-            if line.strip() != "":
-                line_buffer.append(line)
+            line_buffer.append(line)
 
-        line_heights = [self.measure_text(line)['height'] * line_spacing for line in line_buffer]
+        line_heights = [self.font_size * self.base_font_size * line_spacing for line in line_buffer]
         total_height = sum(line_heights)
 
         # Now draw text, line by line

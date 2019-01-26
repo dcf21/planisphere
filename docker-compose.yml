@@ -4,5 +4,4 @@ services:
     build: .
     volumes:
     - .:/code
-    command: ./main_planisphere.sh --theme dark
-    # command: python3 ./starwheel.py --latitude -30 --format pdf --theme dark
+    command: ./main_planisphere.sh --theme default

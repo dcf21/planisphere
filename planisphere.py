@@ -68,7 +68,7 @@ for language in text.text:
         settings = {
             'language': language,
             'latitude': latitude,
-            'theme': theme,
+            'theme': theme
         }
 
         # Render the various parts of the planisphere
