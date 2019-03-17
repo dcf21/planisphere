@@ -26,15 +26,16 @@ text = {
             "instructions_2": "Go outside and face {cardinal}. Holding the planisphere up to the sky, the stars marked at the bottom of the viewing window should match up with those that you see in the sky in front of you.",
             "instructions_3": """Turn to face east or west, and rotate the planisphere so that the word "East" or "West" is at the bottom of the window. Once again, the stars at the bottom of the viewing window should match up with those that you see in the sky in front of you.""",
             "instructions_4": (
-            r"A planisphere is a simple hand-held device which shows a map of which stars are visible in the night sky at any particular time. By rotating the star wheel, it shows how stars move across the sky through the night, and how different constellations are visible at different times of year.",
-            "",
-            r"The constellations of the night sky revolve around the celestial poles once every 23 hour and 56 minutes. The idea of representing the night sky as a flat map, which is turned to emulate the night sky's rotation, dated back to the ancient Greek astronomer Hipparchus (circa 150 BC). The fact that this rotation takes four minutes less than the length of a day means that stars rise four minutes earlier each day, or half-an-hour earlier each week. Through the year, new constellations become visible in the pre-dawn sky, and disappear into evening twilight."),
+                r"A planisphere is a simple hand-held device which shows a map of which stars are visible in the night sky at any particular time. By rotating the star wheel, it shows how stars move across the sky through the night, and how different constellations are visible at different times of year.",
+                "",
+                r"The constellations of the night sky revolve around the celestial poles once every 23 hour and 56 minutes. The idea of representing the night sky as a flat map, which is turned to emulate the night sky's rotation, dated back to the ancient Greek astronomer Hipparchus (circa 150 BC). The fact that this rotation takes four minutes less than the length of a day means that stars rise four minutes earlier each day, or half-an-hour earlier each week. Through the year, new constellations become visible in the pre-dawn sky, and disappear into evening twilight."),
             "more_info": "For more information, see https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2019.",
             "glue_here": "GLUE HERE",
-            "cut_out_instructions": ("Cut out this shaded area with scissors.",
-                                     "",
-                                     "It will become a viewing window through which to look at the star wheel behind."
-                                     ),
+            "cut_out_instructions": (
+                "Cut out this shaded area with scissors.",
+                "",
+                "It will become a viewing window through which to look at the star wheel behind."
+            ),
             "cardinal_points": {"n": "NORTH", "s": "SOUTH", "w": "WEST", "e": "EAST"},
             "months": [
                 [31, "JANUARY"],
@@ -50,20 +51,6 @@ text = {
                 [30, "NOVEMBER"],
                 [31, "DECEMBER"]
             ],
-            "zodiacal_constellations": [
-                {"name": "Aries", "symbol": "\u2648"},
-                {"name": "Taurus", "symbol": "\u2649"},
-                {"name": "Gemini", "symbol": "\u264a"},
-                {"name": "Cancer", "symbol": "\u264b"},
-                {"name": "Leo", "symbol": "\u264c"},
-                {"name": "Virgo", "symbol": "\u264d"},
-                {"name": "Libra", "symbol": "\u264e"},
-                {"name": "Scorpio", "symbol": "\u264f"},
-                {"name": "Sagittarius", "symbol": "\u2650"},
-                {"name": "Capricornus", "symbol": "\u2651"},
-                {"name": "Aquarius", "symbol": "\u2652"},
-                {"name": "Pisces", "symbol": "\u2653"},
-            ],
             "constellation_translations": {
             }
         },
@@ -74,15 +61,16 @@ text = {
             "instructions_2": r"""Allez dehors et tournez-vous de manière à faire face au nord. Avec le cherche-étoiles tenu à bout de bras et le ciel en arrière-plan, les étoiles figurant au bas de la fenêtre de visualisation doivent co\"incider avec celles que vous voyez dans le ciel devant vous.""",
             "instructions_3": r"Tournez-vous vers l'est ou l'ouest, et faites pivoter le cherche-étoiles de sorte que le mot ``Est'' ou ``Ouest'' soit en bas de la fenêtre. Là encore, les étoiles dans la partie inférieure de la fenêtre de visualisation doivent correspondre à celles que vous voyez devant vous dans le ciel.",
             "instructions_4": (
-            r"Un cherche-étoiles est un accessoire de poche simple fournissant une carte des étoiles visibles dans le ciel à un instant donné. Au moyen d'un disque rotatif, il montre comment les étoiles se déplacent dans le ciel pendant la nuit et la manière dont différentes constellations sont visibles selon la période de l'année.",
-            "",
-            r"Dans le ciel nocturne, les constellations accomplissent une révolution autour des pôles célestes toutes les 23 heures et 56 minutes. L'idée de représenter le ciel nocturne à plat sous la forme d'une carte que l'on tourne pour imiter la rotation du ciel date de l'astronome grec de l'Antiquité Hipparque (150 av. J.-C. env.). Le fait que cette rotation s'effectue en quatre minutes de moins que ce que dure une journée signifie que les étoiles se lèvent quatre minutes plus tôt chaque jour, ou une demi-heure plus tôt chaque semaine. Tout au long de l'année, de nouvelles constellations deviennent visibles dans le ciel avant l'aurore, et disparaissent dans le crépuscule en fin de journée."),
+                r"Un cherche-étoiles est un accessoire de poche simple fournissant une carte des étoiles visibles dans le ciel à un instant donné. Au moyen d'un disque rotatif, il montre comment les étoiles se déplacent dans le ciel pendant la nuit et la manière dont différentes constellations sont visibles selon la période de l'année.",
+                "",
+                r"Dans le ciel nocturne, les constellations accomplissent une révolution autour des pôles célestes toutes les 23 heures et 56 minutes. L'idée de représenter le ciel nocturne à plat sous la forme d'une carte que l'on tourne pour imiter la rotation du ciel date de l'astronome grec de l'Antiquité Hipparque (150 av. J.-C. env.). Le fait que cette rotation s'effectue en quatre minutes de moins que ce que dure une journée signifie que les étoiles se lèvent quatre minutes plus tôt chaque jour, ou une demi-heure plus tôt chaque semaine. Tout au long de l'année, de nouvelles constellations deviennent visibles dans le ciel avant l'aurore, et disparaissent dans le crépuscule en fin de journée."),
             "more_info": "Pour plus d'informations, voir https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2019.",
             "glue_here": "COLLER ICI",
-            "cut_out_instructions": (r"Découpez cette zone grisée.",
-                                     "",
-                                     r"Vous pourrez voir la carte du ciel à travers cette fenêtre de visualisation."
-                                     ),
+            "cut_out_instructions": (
+                r"Découpez cette zone grisée.",
+                "",
+                r"Vous pourrez voir la carte du ciel à travers cette fenêtre de visualisation."
+            ),
             "cardinal_points": {"n": "NORD", "s": "SUD", "w": "OUEST", "e": "EST"},
             "months": [
                 [31, "JANVIER"],
@@ -97,20 +85,6 @@ text = {
                 [31, "OCTOBRE"],
                 [30, "NOVEMBRE"],
                 [31, "DÉCEMBRE"]
-            ],
-            "zodiacal_constellations": [
-                {"name": "Aries", "symbol": "\u2648"},
-                {"name": "Taurus", "symbol": "\u2649"},
-                {"name": "Gemini", "symbol": "\u264a"},
-                {"name": "Cancer", "symbol": "\u264b"},
-                {"name": "Leo", "symbol": "\u264c"},
-                {"name": "Virgo", "symbol": "\u264d"},
-                {"name": "Libra", "symbol": "\u264e"},
-                {"name": "Scorpio", "symbol": "\u264f"},
-                {"name": "Sagittarius", "symbol": "\u2650"},
-                {"name": "Capricornus", "symbol": "\u2651"},
-                {"name": "Aquarius", "symbol": "\u2652"},
-                {"name": "Pisces", "symbol": "\u2653"},
             ],
             "constellation_translations": {
                 "Andromeda": "Andromède",

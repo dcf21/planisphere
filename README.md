@@ -1,4 +1,4 @@
-## Make your own cardboard model planisphere.
+## Make your own cardboard model planisphere
 
 See https://in-the-sky.org/planisphere/index.php for more information.
 

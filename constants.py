@@ -59,11 +59,11 @@ r_2 = r_1 - r_gap
 
 
 def radius(dec, latitude):
-    dec_outer = (90 + (90 - latitude)) * 1.125
+    dec_span = (90 + (90 - latitude)) * 1.125
     if latitude >= 0:
-        return (90 - dec) / dec_outer * r_2
+        return (90 - dec) / dec_span * r_2
     else:
-        return (90 + dec) / dec_outer * r_2
+        return (90 + dec) / dec_span * r_2
 
 
 def transform(alt, az, latitude):

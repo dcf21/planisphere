@@ -107,10 +107,12 @@ class AltAzGrid(BaseComponent):
             alt_edge = -8
             azimuth_step = 0.2
 
-        # Draw horizon, and line to cut around edge
+        # Draw horizon (altitude 0), and line to cut around edge of window (altitude alt_edge)
         for alt in (alt_edge, 0):
+            # Draw a line, segment by segment, taking small steps in azimuth
             path = [transform(alt=alt, az=az, latitude=latitude) for az in arange(0, 360.5, azimuth_step)]
 
+            # Project line from RA, Dec into planispheric coordinates
             context.begin_path()
             for i, p in enumerate(path):
                 r_b = radius(dec=p[1] / unit_deg, latitude=latitude)
@@ -121,10 +123,12 @@ class AltAzGrid(BaseComponent):
             context.stroke()
 
             if alt == alt_edge:
-                # Create clipping area, excluding central hole
+                # Draw the central hole in the middle of the viewing window
                 context.begin_sub_path()
                 context.circle(centre_x=0, centre_y=0, radius=central_hole_size)
                 context.stroke()
+
+                # Create clipping area, excluding central hole
                 context.clip()
 
         # Draw lines of constant altitude
@@ -139,7 +143,7 @@ class AltAzGrid(BaseComponent):
                     context.line_to(**pos(r_b, p[0]))
         context.stroke(color=(0.5, 0.5, 0.5, 1))
 
-        # Draw lines marking S,SSE,SE,ESE,E, etc
+        # Draw lines of constant azimuth, marking S,SSE,SE,ESE,E, etc
         context.begin_path()
         for az in arange(0, 359, 22.5):
             path = [transform(alt=alt, az=az, latitude=latitude) for alt in arange(0, 90.1, 1)]
@@ -168,6 +172,7 @@ class AltAzGrid(BaseComponent):
                          x=p['x'], y=p['y'],
                          h_align=0, v_align=1, gap=unit_mm, rotation=tr)
 
+        # Write the text "Glue here" at various points around the horizon
         context.set_font_style(bold=True)
         context.set_color(color=(0, 0, 0, 1))
         make_gluing_label(azimuth=0)

@@ -82,10 +82,14 @@ class Holder(BaseComponent):
 
         a = 6 * unit_cm
         h = r_1 + fold_gap
+
+        # Draw dotted line for folding the bottom of the planisphere
         context.begin_path()
         context.move_to(x=-r_1, y=0)
         context.line_to(x=r_1, y=0)
         context.stroke(dotted=True)
+
+        # Draw the rectangular back and lower body of the planisphere
         context.begin_path()
         context.move_to(x=-r_1, y=a)
         context.line_to(x=-r_1, y=-a)
@@ -93,6 +97,7 @@ class Holder(BaseComponent):
         context.line_to(x=r_1, y=-a)
         context.stroke(dotted=False)
 
+        # Draw the curved upper part of the body of the planisphere
         theta = unit_rev / 2 - atan2(r_1, h - a)
         context.begin_path()
         context.arc(centre_x=0, centre_y=-h, radius=r_2, arc_from=-theta - pi / 2, arc_to=theta - pi / 2)
@@ -102,7 +107,7 @@ class Holder(BaseComponent):
         context.line_to(x=r_1, y=-a)
         context.stroke()
 
-        # Viewing window
+        # Shade the viewing window which needs to be cut out
         x0 = (0, h)
         context.begin_path()
         for i, az in enumerate(arange(0, 360.5, 1)):
@@ -116,6 +121,7 @@ class Holder(BaseComponent):
         context.stroke()
         context.fill(color=(0, 0, 0, 0.2))
 
+        # Display instructions for cutting out the viewing window
         instructions = text[language]["cut_out_instructions"]
         context.set_color(color=(0, 0, 0, 1))
         context.text_wrapped(text=instructions,
@@ -139,6 +145,7 @@ class Holder(BaseComponent):
             context.text(text=dir, x=x0[0] + p['x'], y=-x0[1] + p['y'],
                          h_align=0, v_align=1, gap=unit_mm, rotation=tr)
 
+        # Write the cardinal points around the horizon of the viewing window
         context.set_font_style(bold=True)
 
         txt = text[language]['cardinal_points']['w']
@@ -155,25 +162,36 @@ class Holder(BaseComponent):
 
         context.set_font_style(bold=False)
 
-        # Clock face
-        theta = unit_rev / 24 * 7  # 5pm -> 7am
-        dash = unit_rev / 24 / 4
+        # Clock face, which lines up with the date scale on the star wheel
+        theta = unit_rev / 24 * 7  # 5pm -> 7am means we cover 7 hours on either side of midnight
+        dash = unit_rev / 24 / 4  # Draw fat dashes at 15 minute intervals
+
+        # Outer edge of dashed scale
         r_3 = r_2 - 2 * unit_mm
+
+        # Inner edge of dashed scale
         r_4 = r_2 - 3 * unit_mm
+
+        # Radius of dashes for marking hours
         r_5 = r_2 - 4 * unit_mm
+
+        # Radius of text marking hours
         r_6 = r_2 - 5.5 * unit_mm
 
+        # Inner and outer curves around dashed scale
         context.begin_path()
         context.arc(centre_x=0, centre_y=-h, radius=r_3, arc_from=-theta - pi / 2, arc_to=theta - pi / 2)
         context.begin_sub_path()
         context.arc(centre_x=0, centre_y=-h, radius=r_4, arc_from=-theta - pi / 2, arc_to=theta - pi / 2)
         context.stroke()
 
+        # Draw a fat dashed line with one dash every 15 minutes
         for i in arange(-theta, theta, 2 * dash):
             context.begin_path()
             context.arc(centre_x=0, centre_y=-h, radius=(r_3 + r_4) / 2, arc_from=i - pi / 2, arc_to=i + dash - pi / 2)
             context.stroke(line_width=(r_3 - r_4) / line_width_base)
 
+        # Write the hours
         for hr in arange(-7, 7.1, 1):
             txt = "{:.0f}{}".format(hr if (hr > 0) else hr + 12,
                                     "AM" if (hr > 0) else "PM")
@@ -183,6 +201,7 @@ class Holder(BaseComponent):
                 txt = ""
             t = unit_rev / 24 * hr * (-1 if not is_southern else 1)
 
+            # Stroke a dash and write the number of the hour
             context.begin_path()
             context.move_to(x=r_3 * sin(t), y=-h - r_3 * cos(t))
             context.line_to(x=r_5 * sin(t), y=-h - r_5 * cos(t))
@@ -202,8 +221,9 @@ class Holder(BaseComponent):
                     arc_to=unit_rev / 2 + (t1 + t2) - pi / 2)
         context.stroke(line_width=1)
 
-        # Title
+        # For latitudes not too close to the pole, we have enough space to fit instructions onto the planisphere
         if latitude < 56:
+            # Big bold title
             context.set_font_size(3.0)
             txt = text[language]['title']
             context.set_font_style(bold=True)
@@ -213,6 +233,7 @@ class Holder(BaseComponent):
                 h_align=0, v_align=0, gap=0, rotation=0)
             context.set_font_style(bold=False)
 
+            # First column of instructions
             context.set_font_size(2)
             context.text(
                 text="1",
@@ -224,6 +245,7 @@ class Holder(BaseComponent):
                 x=-5.0 * unit_cm, y=-3.4 * unit_cm, width=4.5 * unit_cm, justify=-1,
                 h_align=0, v_align=1, rotation=0)
 
+            # Second column of instructions
             context.set_font_size(2)
             context.text(
                 text="2",
@@ -235,6 +257,7 @@ class Holder(BaseComponent):
                 x=0, y=-3.4 * unit_cm, width=4.5 * unit_cm, justify=-1,
                 h_align=0, v_align=1, rotation=0)
 
+            # Third column of instructions
             context.set_font_size(2)
             context.text(
                 text="3",
@@ -246,6 +269,8 @@ class Holder(BaseComponent):
                 x=5.0 * unit_cm, y=-3.4 * unit_cm, width=4.5 * unit_cm, justify=-1,
                 h_align=0, v_align=1, rotation=0)
         else:
+            # For planispheres for use at high latitudes, we don't have much space, so don't show instructions.
+            # We just display a big bold title
             context.set_font_size(3.0)
             txt = text[language]['title']
             context.set_font_style(bold=True)
@@ -255,12 +280,14 @@ class Holder(BaseComponent):
                 h_align=0, v_align=0, gap=0, rotation=0)
             context.set_font_style(bold=False)
 
+        # Write explanatory text on the back of the planisphere
         context.set_font_size(1.1)
         context.text_wrapped(
             text=text[language]['instructions_4'],
             x=0, y=5.5 * unit_cm, width=12 * unit_cm, justify=-1,
             h_align=0, v_align=1, rotation=0.5 * unit_rev)
 
+        # Display web link and copyright text
         txt = text[language]['more_info']
         context.set_font_size(0.9)
         context.text(text=txt, x=0, y=-0.5 * unit_cm, h_align=0, v_align=0, gap=0, rotation=0)
