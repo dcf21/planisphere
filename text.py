@@ -3,7 +3,7 @@
 #
 # The python script in this file makes the various parts of a model planisphere.
 #
-# Copyright (C) 2014-2019 Dominic Ford <dcf21-www@dcford.org.uk>
+# Copyright (C) 2014-2020 Dominic Ford <dcf21-www@dcford.org.uk>
 #
 # This code is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -29,7 +29,7 @@ text = {
                 r"A planisphere is a simple hand-held device which shows a map of which stars are visible in the night sky at any particular time. By rotating the star wheel, it shows how stars move across the sky through the night, and how different constellations are visible at different times of year.",
                 "",
                 r"The constellations of the night sky revolve around the celestial poles once every 23 hour and 56 minutes. The idea of representing the night sky as a flat map, which is turned to emulate the night sky's rotation, dated back to the ancient Greek astronomer Hipparchus (circa 150 BC). The fact that this rotation takes four minutes less than the length of a day means that stars rise four minutes earlier each day, or half-an-hour earlier each week. Through the year, new constellations become visible in the pre-dawn sky, and disappear into evening twilight."),
-            "more_info": "For more information, see https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2019.",
+            "more_info": "For more information, see https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2020.",
             "glue_here": "GLUE HERE",
             "cut_out_instructions": (
                 "Cut out this shaded area with scissors.",
@@ -64,7 +64,7 @@ text = {
                 r"Um planisfério é um dispositivo portátil simples que mostra um mapa cujas estrelas são visíveis no céu noturno a qualquer momento específico. Ao girar a roda estelar, mostra como as estrelas se movem pelo céu durante a noite e como diferentes constelações são visíveis em diferentes épocas do ano.",
                 "",
                 r"As constelações do céu noturno giram em torno dos pólos celestes uma vez a cada 23 horas e 56 minutos. A idéia de representar o céu noturno como um mapa plano, voltado para imitar a rotação do céu noturno, remonta ao antigo astrônomo grego Hiparco (por volta de 150 aC). O fato de essa rotação levar quatro minutos a menos que a duração de um dia significa que as estrelas aumentam quatro minutos mais cedo a cada dia, ou meia hora mais cedo a cada semana. Ao longo do ano, novas constelações se tornam visíveis no céu antes do amanhecer e desaparecem no crepúsculo da noite."),
-            "more_info": "Para mais informações, veja https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2019.",
+            "more_info": "Para mais informações, veja https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2020.",
             "glue_here": "COLA AQUI",
             "cut_out_instructions": (
                 "Recorte esta área sombreada com uma tesoura.",
@@ -187,7 +187,7 @@ text = {
                 r"Un cherche-étoiles est un accessoire de poche simple fournissant une carte des étoiles visibles dans le ciel à un instant donné. Au moyen d'un disque rotatif, il montre comment les étoiles se déplacent dans le ciel pendant la nuit et la manière dont différentes constellations sont visibles selon la période de l'année.",
                 "",
                 r"Dans le ciel nocturne, les constellations accomplissent une révolution autour des pôles célestes toutes les 23 heures et 56 minutes. L'idée de représenter le ciel nocturne à plat sous la forme d'une carte que l'on tourne pour imiter la rotation du ciel date de l'astronome grec de l'Antiquité Hipparque (150 av. J.-C. env.). Le fait que cette rotation s'effectue en quatre minutes de moins que ce que dure une journée signifie que les étoiles se lèvent quatre minutes plus tôt chaque jour, ou une demi-heure plus tôt chaque semaine. Tout au long de l'année, de nouvelles constellations deviennent visibles dans le ciel avant l'aurore, et disparaissent dans le crépuscule en fin de journée."),
-            "more_info": "Pour plus d'informations, voir https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2019.",
+            "more_info": "Pour plus d'informations, voir https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2020.",
             "glue_here": "COLLER ICI",
             "cut_out_instructions": (
                 r"Découpez cette zone grisée.",
