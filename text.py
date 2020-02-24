@@ -58,16 +58,16 @@ text = {
         {
             "title": "PLANISPHÄRE",
             "instructions_1": "Drehen Sie das Sternenrad bis Sie am äußeren Rand das heutige Datum finden und bringen Sie es in eine Linie mit der jetzigen Uhrzeit. Das Sichtfenster zeigt Ihnen nun alle Konstellationen, die Sie im Himmel sehen können.",
-            "instructions_2": "Gehen Sie nach draußen und schauen Sie nach {cardinal}. Halten Sie die Planisphäre hoch in den Himmel. Die Sterne am unteren Ende des Sichtfensters sollten mit den Sternen übereinstimmen, welche Sie im Himmel vor sich sehen können.",
-            "instructions_3": """Drehen Sie sich nach Osten oder Westen dann drehen Sie die gesamte Planisphäre, so dass „Osten“ oder „Westen“ nach unten zeigen. Abermals stimmen die Sterne am unteren Rand des Sichtfensters mit denen am Himmel vor Ihnen überein.""",
+            "instructions_2": "Gehen Sie nach draußen und schauen Sie nach Norden. Halten Sie die Planisphäre hoch in den Himmel. Die Sterne am unteren Ende des Sichtfensters sollten mit den Sternen übereinstimmen, welche Sie im Himmel vor sich sehen können.",
+            "instructions_3": """Drehen Sie sich nach Osten oder Westen. Dann drehen Sie die gesamte Planisphäre, so dass „Osten" oder „Westen" nach unten zeigen. Abermals stimmen die Sterne am unteren Rand des Sichtfensters mit denen am Himmel vor Ihnen überein.""",
             "instructions_4": (
-                r"Eine Planisphäre ist ein einfaches Hilfsmittel, dass eine Karte der Sterne zeigt, welche nachts um eine ausgewählte Uhrzeit zu sehen sind. Durch Drehen des Sternenrads wir angezeigt wie die Sterne über den Himmel wandern und wie verschiedene Konstellationen über das Jahr hinweg sichtbar sind.",
+                r"Eine Planisphäre ist ein einfaches Hilfsmittel das eine Karte der Sterne zeigt, welche nachts um eine ausgewählte Uhrzeit zu sehen sind. Durch Drehen des Sternenrads wird angezeigt wie die Sterne über den Himmel wandern und wie verschiedene Konstellationen über das Jahr hinweg sichtbar sind.",
                 "",
-                r"Die Konstellationen des Nachthimmels drehen sich um den Himmelspol alle 23 Stunden und 56 Minuten. Die Idee den Nachthimmel als flache Karte darzustellen, welche gedreht wird um die Himmelsrotation zu simulieren, geht auf den griechischen Astronomen Hipparchus zurück (ca. 150 AD). Da die Rotation vier Minuten weniger benötigt als ein Tag lang ist hat dies zur Folge, dass die Sterne jeden Tag vier Minuten früher aufgehen, beziehungsweise eine halbe Stunde jede Woche. Während des Jahres werden dadurch neue Konstellationen am Morgenhimmel sichtbar und verschwinden in der abendlichen Dämmerung."),
+                r"Die Konstellationen des Nachthimmels drehen sich um den Himmelspol alle 23 Stunden und 56 Minuten. Die Idee den Nachthimmel als flache Karte darzustellen, welche gedreht wird um die Himmelsrotation zu simulieren, geht auf den griechischen Astronomen Hipparchus zurück (ca. 150 AD). Da die Rotation vier Minuten weniger benötigt als ein Tag lang ist, hat dies zur Folge, dass die Sterne jeden Tag vier Minuten früher aufgehen, beziehungsweise eine halbe Stunde jede Woche. Während des Jahres werden dadurch neue Konstellationen am Morgenhimmel sichtbar und verschwinden in der abendlichen Dämmerung."),
             "more_info": "Für weitere Informationen, sehen Sie https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2020.",
             "glue_here": "HIER KLEBEN",
             "cut_out_instructions": (
-                "Schneiden Sie diese graue Fläche mit der Schere.",
+                "Schneiden Sie diese graue Fläche mit der Schere aus.",
                 "",
                 "Dies wird das Sichtfenster, durch welches Sie auf das Sternenrad dahinter schauen."
 
