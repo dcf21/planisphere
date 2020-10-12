@@ -96,6 +96,13 @@ class StarWheel(BaseComponent):
         # Radius for writing numeric labels for days of the month
         r_6 = r_1 * 0.4 + r_2 * 0.6
 
+        # Shade background to month scale
+        shading_inner_radius = r_1 * 0.55 + r_2 * 0.45
+        context.begin_path()
+        context.circle(centre_x=0, centre_y=0, radius=r_1)
+        context.circle(centre_x=0, centre_y=0, radius=shading_inner_radius)
+        context.fill(color=theme['shading'])
+
         # Draw the outer edge of planisphere
         context.begin_path()
         context.circle(centre_x=0, centre_y=0, radius=r_1)
