@@ -546,5 +546,42 @@ text = {
                 "Volans": "Летюча_Риба",
                 "Vulpecula": "Лисичка",
             }
+        },
+    "es":
+        {
+            "title": "PLANISFERIO",
+            "instructions_1": "Gira la rueda de estrellas hasta encontrar el punto del borde donde está la fecha del día, y alínealo con la hora actual. El visor ahora muestra todas las constelaciones visibles en el cielo.",
+            "instructions_2": "Ve afuera y apunta al {cardinal}. Sosteniendo el planisferio hacia el cielo, las estrellas indicadas en el borde inferior del visor deberían coincidir con las que ves en el cielo frente a ti",
+            "instructions_3": """Gira hacia el Este o el Oeste, y gira el planisferio hasta que la palabra "Este" u "Oeste" esté en la parte inferior del visor. Nuevamente, las estrellas en el borde inferior deberían coincidir con lo que ves en el cielo frente a ti""",
+            "instructions_4": (
+
+                r"Un planisferio es un dispositivo portátil simple que muestra un mapa de las estrellas visibles en el cielo nocturno en cualquier momento en particular. Al rotar la rueda de estrellas se muestra cómo se mueven las estrellas en el cielo durante la noche, y qué constelaciones son visibles en diferentes momentos del año.",
+                "",
+                r"Las constelaciones en el cielo nocturno giran alrededor de los polos celestes cada 23 horas y 56 minutos. La idea de representar el cielo nocturno como un mapa plano que se gira para emular la rotación del cielo nocturno se remonta al astrónomo Griego antiguo Hiparco de Nicea (alrededor de 150 a.C.). Como esta rotación dura menos que la longitud del día, las estrellas surgen cuatro minutos más temprano cada día, o media hora más temprano cada semana. A lo largo del año se pueden ver nuevas constelaciones en el cielo antes del amanecer, y otras desaparecen antes del atardecer."),
+            "more_info": "Para más información: https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2014\u20132023.",
+            "glue_here": "PEGAR AQUÍ",
+            "cut_out_instructions": (
+                "Corta el area sombreada con tijeras.",
+                "",
+                "Esto será el visor a través del que mirarás la rueda de estrellas."
+            ),
+            "cardinal_points": {"n": "NORTE", "s": "SUR", "w": "OESTE", "e": "ESTE"},
+            "months": [
+                [31, "ENERO"],
+                [28, "FEBRERO"],
+                [31, "MARZO"],
+                [30, "ABRIL"],
+                [31, "MAYO"],
+                [30, "JUNIO"],
+                [31, "JULIO"],
+                [31, "AGOSTO"],
+                [30, "SEPTIEMBRE"],
+                [31, "OCTUBRE"],
+                [30, "NOVIEMBRE"],
+                [31, "DICIEMBRE"]
+            ],
+            "constellation_translations": {
+
+            }
         }
 }
