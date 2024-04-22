@@ -4,7 +4,7 @@
 #
 # The python script in this file makes the various parts of a model planisphere.
 #
-# Copyright (C) 2014-2023 Dominic Ford <https://dcford.org.uk/>
+# Copyright (C) 2014-2024 Dominic Ford <https://dcford.org.uk/>
 #
 # This code is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -39,24 +39,26 @@ from starwheel import StarWheel
 os.system("rm -Rf output")
 os.system("mkdir -p output/planispheres output/planisphere_parts")
 
-arguments = fetch_command_line_arguments()
-theme = arguments['theme']
+arguments: dict[str, int | str] = fetch_command_line_arguments()
+theme: str = arguments['theme']
 
 # Render planisphere in all available languages
+language: str
 for language in text.text:
 
     # Render climates for latitudes at 5-degree spacings from 10 deg -- 85 deg, plus 52N
+    latitude: float
     for latitude in list(range(-80, 90, 5)) + [52]:
 
         # Do not make equatorial planispheres, as they don't really work
         if -10 < latitude < 10:
             continue
 
-        # Boolean flag for which hemiphere we're in
-        southern = latitude < 0
+        # Boolean flag for which hemisphere we're in
+        southern: bool = latitude < 0
 
         # A dictionary of common substitutions
-        subs = {
+        subs: dict[str, str | float] = {
             "dir_parts": "output/planisphere_parts",
             "dir_out": "output/planispheres",
             "abs_lat": abs(latitude),
@@ -65,7 +67,7 @@ for language in text.text:
             "lang_short": "" if language == "en" else "_{}".format(language)
         }
 
-        settings = {
+        settings: dict[str, str | float] = {
             'language': language,
             'latitude': latitude,
             'theme': theme

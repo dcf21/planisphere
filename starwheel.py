@@ -4,7 +4,7 @@
 #
 # The python script in this file makes the various parts of a model planisphere.
 #
-# Copyright (C) 2014-2023 Dominic Ford <https://dcford.org.uk/>
+# Copyright (C) 2014-2024 Dominic Ford <https://dcford.org.uk/>
 #
 # This code is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -29,7 +29,7 @@ from numpy import arange
 import calendar
 from bright_stars_process import fetch_bright_star_list
 from constants import unit_deg, unit_rev, unit_mm, unit_cm, r_1, r_gap, central_hole_size, radius
-from graphics_context import BaseComponent
+from graphics_context import BaseComponent, GraphicsContext
 from settings import fetch_command_line_arguments
 from text import text
 from themes import themes
@@ -40,13 +40,13 @@ class StarWheel(BaseComponent):
     Render the star wheel for the planisphere.
     """
 
-    def default_filename(self):
+    def default_filename(self) -> str:
         """
         Return the default filename to use when saving this component.
         """
         return "star_wheel"
 
-    def bounding_box(self, settings):
+    def bounding_box(self, settings: dict) -> dict[str, float]:
         """
         Return the bounding box of the canvas area used by this component.
 
@@ -62,7 +62,7 @@ class StarWheel(BaseComponent):
             'y_max': r_1 + 4 * unit_mm
         }
 
-    def do_rendering(self, settings, context):
+    def do_rendering(self, settings: dict, context: GraphicsContext) -> None:
         """
         This method is required to actually render this item.
 
@@ -74,30 +74,30 @@ class StarWheel(BaseComponent):
             None
         """
 
-        is_southern = settings['latitude'] < 0
-        language = settings['language']
-        latitude = abs(settings['latitude'])
-        theme = themes[settings['theme']]
+        is_southern: bool = settings['latitude'] < 0
+        language: str = settings['language']
+        latitude: float = abs(settings['latitude'])
+        theme: dict[str, tuple[float, float, float, float]] = themes[settings['theme']]
 
         context.set_font_size(1.2)
 
         # Radius of outer edge of star chart
-        r_2 = r_1 - r_gap
+        r_2: float = r_1 - r_gap
 
         # Radius of day-of-month ticks from centre of star chart
-        r_3 = r_1 * 0.1 + r_2 * 0.9
+        r_3: float = r_1 * 0.1 + r_2 * 0.9
 
         # Radius of every fifth day-of-month tick from centre of star chart
-        r_4 = r_1 * 0.2 + r_2 * 0.8
+        r_4: float = r_1 * 0.2 + r_2 * 0.8
 
         # Radius of lines between months on date scale
-        r_5 = r_1
+        r_5: float = r_1
 
         # Radius for writing numeric labels for days of the month
-        r_6 = r_1 * 0.4 + r_2 * 0.6
+        r_6: float = r_1 * 0.4 + r_2 * 0.6
 
         # Shade background to month scale
-        shading_inner_radius = r_1 * 0.55 + r_2 * 0.45
+        shading_inner_radius: float = r_1 * 0.55 + r_2 * 0.45
         context.begin_path()
         context.circle(centre_x=0, centre_y=0, radius=r_1)
         context.circle(centre_x=0, centre_y=0, radius=shading_inner_radius)
@@ -117,9 +117,10 @@ class StarWheel(BaseComponent):
         context.clip()
 
         # Draw lines of constant declination at 15 degree intervals.
+        dec: float
         for dec in arange(-80, 85, 15):
             # Convert declination into radius from the centre of the planisphere
-            r = radius(dec=dec, latitude=latitude)
+            r: float = radius(dec=dec, latitude=latitude)
             if r > r_2:
                 continue
             context.begin_path()
@@ -129,7 +130,7 @@ class StarWheel(BaseComponent):
         # Draw constellation stick figures
         with open("raw_data/constellation_stick_figures.dat", "rt") as f_in:
             for line in f_in:
-                line = line.strip()
+                line: str = line.strip()
 
                 # Ignore blank lines and comment lines
                 if (len(line) == 0) or (line[0] == '#'):
@@ -137,26 +138,38 @@ class StarWheel(BaseComponent):
 
                 # Split line into words.
                 # These are the names of the constellations, and the start and end points for each stroke.
-                [name, ra1, dec1, ra2, dec2] = line.split()
+                name: str
+                ra1_str: str
+                dec1_str: str
+                ra2_str: str
+                dec2_str: str
+                name, ra1_str, dec1_str, ra2_str, dec2_str = line.split()
 
-                # If we're making a southern hemisphere planisphere, we flip the sky upside down
+                dec1: float = float(dec1_str)
+                ra1: float = float(ra1_str)
+                dec2: float = float(dec2_str)
+                ra2: float = float(ra2_str)
+
+                # In the southern hemisphere, we flip the sky upside down
                 if is_southern:
-                    ra1 = -float(ra1)
-                    ra2 = -float(ra2)
-                    dec1 = -float(dec1)
-                    dec2 = -float(dec2)
+                    dec1 *= -1
+                    ra1 *= -1
+                    dec2 *= -1
+                    ra2 *= -1
 
                 # Project RA and Dec into radius and azimuth in the planispheric projection
-                r_point_1 = radius(dec=float(dec1), latitude=latitude)
+                r_point_1: float = radius(dec=float(dec1), latitude=latitude)
                 if r_point_1 > r_2:
                     continue
 
-                r_point_2 = radius(dec=float(dec2), latitude=latitude)
+                r_point_2: float = radius(dec=float(dec2), latitude=latitude)
                 if r_point_2 > r_2:
                     continue
 
-                p1 = (-r_point_1 * cos(float(ra1) * unit_deg), -r_point_1 * sin(float(ra1) * unit_deg))
-                p2 = (-r_point_2 * cos(float(ra2) * unit_deg), -r_point_2 * sin(float(ra2) * unit_deg))
+                p1: tuple[float, float] = (-r_point_1 * cos(float(ra1) * unit_deg),
+                                           -r_point_1 * sin(float(ra1) * unit_deg))
+                p2: tuple[float, float] = (-r_point_2 * cos(float(ra2) * unit_deg),
+                                           -r_point_2 * sin(float(ra2) * unit_deg))
 
                 # Impose a maximum length of 4 cm on constellation stick figures; they get quite distorted at the edge
                 if hypot(p2[0] - p1[0], p2[1] - p1[1]) > 4 * unit_cm:
@@ -170,7 +183,7 @@ class StarWheel(BaseComponent):
 
         # Draw stars from Yale Bright Star Catalogue
         for star_descriptor in fetch_bright_star_list()['stars'].values():
-            [ra, dec, mag] = star_descriptor[:3]
+            ra, dec, mag = star_descriptor[:3]
 
             # Discard stars fainter than mag 4
             if mag == "-" or float(mag) > 4.0:
@@ -184,7 +197,7 @@ class StarWheel(BaseComponent):
                 ra *= -1
                 dec *= -1
 
-            r = radius(dec=dec, latitude=latitude)
+            r: float = radius(dec=dec, latitude=latitude)
             if r > r_2:
                 continue
 
@@ -201,21 +214,21 @@ class StarWheel(BaseComponent):
         # Open a list of the coordinates where we place the names of the constellations
         with open("raw_data/constellation_names.dat") as f_in:
             for line in f_in:
-                line = line.strip()
+                line: str = line.strip()
 
                 # Ignore blank lines and comment lines
                 if (len(line) == 0) or (line[0] == '#'):
                     continue
 
                 # Split line into words
-                [name, ra, dec] = line.split()[:3]
+                name, ra_str, dec_str = line.split()[:3]
 
                 # Translate constellation name into the requested language, if required
                 if name in text[language]['constellation_translations']:
                     name = text[language]['constellation_translations'][name]
 
-                ra = float(ra) * 360. / 24
-                dec = float(dec)
+                ra: float = float(ra_str) * 360. / 24
+                dec: float = float(dec_str)
 
                 # If we're making a southern hemisphere planisphere, we flip the sky upside down
                 if is_southern:
@@ -223,18 +236,18 @@ class StarWheel(BaseComponent):
                     dec = -dec
 
                 # Render name of constellation, with _s turned into spaces
-                name2 = re.sub("_", " ", name)
-                r = radius(dec=dec, latitude=latitude)
+                name2: str = re.sub("_", " ", name)
+                r: float = radius(dec=dec, latitude=latitude)
                 if r > r_2:
                     continue
-                p = (-r * cos(ra * unit_deg), -r * sin(ra * unit_deg))
-                a = atan2(p[0], p[1])
+                p: tuple[float, float] = (-r * cos(ra * unit_deg), -r * sin(ra * unit_deg))
+                a: float = atan2(p[0], p[1])
                 context.text(text=name2, x=p[0], y=p[1], h_align=0, v_align=0, gap=0, rotation=unit_rev / 2 - a)
 
         # Calendar ring counts clockwise in northern hemisphere; anticlockwise in southern hemisphere
-        s = -1 if not is_southern else 1
+        s: int = -1 if not is_southern else 1
 
-        def theta2014(d):
+        def theta2014(d: float) -> float:
             """
             Convert Julian Day into a rotation angle of the sky about the north celestial pole at midnight,
             relative to spring equinox.
@@ -249,6 +262,9 @@ class StarWheel(BaseComponent):
         # Write month names around the date scale
         context.set_font_size(2.3)
         context.set_color(theme['date'])
+        mn: int
+        mlen: int
+        name: str
         for mn, (mlen, name) in enumerate(text[language]['months']):
             theta = s * theta2014(calendar.julian_day(year=2014, month=mn + 1, day=mlen // 2, hour=12, minute=0, sec=0))
 
@@ -264,16 +280,16 @@ class StarWheel(BaseComponent):
                 theta = s * theta2014(calendar.julian_day(year=2014, month=mn + 1, day=d, hour=0, minute=0, sec=0))
 
                 # Days of the month which are multiples of 5 get longer ticks
-                R = r_3 if (d % 5) else r_4
+                r_tick_len: float = r_3 if (d % 5) else r_4
 
                 # The last day of each month is drawn as a dividing line between months
                 if d == mlen:
-                    R = r_5
+                    r_tick_len = r_5
 
                 # Draw line
                 context.begin_path()
                 context.move_to(x=r_2 * cos(theta), y=-r_2 * sin(theta))
-                context.line_to(x=R * cos(theta), y=-R * sin(theta))
+                context.line_to(x=r_tick_len * cos(theta), y=-r_tick_len * sin(theta))
                 context.stroke(line_width=1, dotted=False)
 
             # Write numeric labels for the 10th, 20th and last day of each month
@@ -282,14 +298,14 @@ class StarWheel(BaseComponent):
                 context.set_font_size(1.2)
 
                 # First digit
-                theta2 = theta + 0.15 * unit_deg
+                theta2: float = theta + 0.15 * unit_deg
                 context.text(text="%d" % (d / 10), x=r_6 * cos(theta2), y=-r_6 * sin(theta2),
                              h_align=1, v_align=0,
                              gap=0,
                              rotation=-theta + pi / 2)
 
                 # Second digit
-                theta2 = theta - 0.15 * unit_deg
+                theta2: float = theta - 0.15 * unit_deg
                 context.text(text="%d" % (d % 10), x=r_6 * cos(theta2), y=-r_6 * sin(theta2),
                              h_align=-1, v_align=0,
                              gap=0,

@@ -3,7 +3,7 @@
 #
 # The python script in this file makes the various parts of a model planisphere.
 #
-# Copyright (C) 2014-2023 Dominic Ford <https://dcford.org.uk/>
+# Copyright (C) 2014-2024 Dominic Ford <https://dcford.org.uk/>
 #
 # This code is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -23,7 +23,7 @@ Define a common command-line interface which is shared between all the scripts.
 import argparse
 
 
-def fetch_command_line_arguments(default_filename=''):
+def fetch_command_line_arguments(default_filename: str = '') -> dict[str, int | str]:
     """
     Read input parameters from the command line
 

@@ -3,7 +3,7 @@
 #
 # The python script in this file makes the various parts of a model planisphere.
 #
-# Copyright (C) 2014-2023 Dominic Ford <https://dcford.org.uk/>
+# Copyright (C) 2014-2024 Dominic Ford <https://dcford.org.uk/>
 #
 # This code is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -18,7 +18,7 @@
 
 # A list of text strings, which we can render in various languages
 
-text = {
+text: dict[str, dict] = {
     "en":
         {
             "title": "PLANISPHERE",
@@ -29,7 +29,7 @@ text = {
                 r"A planisphere is a simple hand-held device which shows a map of which stars are visible in the night sky at any particular time. By rotating the star wheel, it shows how stars move across the sky through the night, and how different constellations are visible at different times of year.",
                 "",
                 r"The constellations of the night sky revolve around the celestial poles once every 23 hour and 56 minutes. The idea of representing the night sky as a flat map, which is turned to emulate the night sky's rotation, dates back to the ancient Greek astronomer Hipparchus (circa 150 BC). The fact that this rotation takes four minutes less than the length of a day means that stars rise four minutes earlier each day, or half-an-hour earlier each week. Through the year, new constellations become visible in the pre-dawn sky, and disappear into evening twilight."),
-            "more_info": "For more information, see https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2014\u20132023.",
+            "more_info": "For more information, see https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2014\u20132024.",
             "glue_here": "GLUE HERE",
             "cut_out_instructions": (
                 "Cut out this shaded area with scissors.",
@@ -64,7 +64,7 @@ text = {
                 r"Eine Planisphäre ist ein einfaches Hilfsmittel das eine Karte der Sterne zeigt, welche nachts um eine ausgewählte Uhrzeit zu sehen sind. Durch Drehen des Sternenrads wird angezeigt wie die Sterne über den Himmel wandern und wie verschiedene Konstellationen über das Jahr hinweg sichtbar sind.",
                 "",
                 r"Die Konstellationen des Nachthimmels drehen sich um den Himmelspol alle 23 Stunden und 56 Minuten. Die Idee den Nachthimmel als flache Karte darzustellen, welche gedreht wird um die Himmelsrotation zu simulieren, geht auf den griechischen Astronomen Hipparchus zurück (ca. 150 AD). Da die Rotation vier Minuten weniger benötigt als ein Tag lang ist, hat dies zur Folge, dass die Sterne jeden Tag vier Minuten früher aufgehen, beziehungsweise eine halbe Stunde jede Woche. Während des Jahres werden dadurch neue Konstellationen am Morgenhimmel sichtbar und verschwinden in der abendlichen Dämmerung."),
-            "more_info": "Für weitere Informationen, sehen Sie https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2014\u20132023.",
+            "more_info": "Für weitere Informationen, sehen Sie https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2014\u20132024.",
             "glue_here": "HIER KLEBEN",
             "cut_out_instructions": (
                 "Schneiden Sie diese graue Fläche mit der Schere aus.",
@@ -188,7 +188,7 @@ text = {
                 r"Un cherche-étoiles est un accessoire de poche simple fournissant une carte des étoiles visibles dans le ciel à un instant donné. Au moyen d'un disque rotatif, il montre comment les étoiles se déplacent dans le ciel pendant la nuit et la manière dont différentes constellations sont visibles selon la période de l'année.",
                 "",
                 r"Dans le ciel nocturne, les constellations accomplissent une révolution autour des pôles célestes toutes les 23 heures et 56 minutes. L'idée de représenter le ciel nocturne à plat sous la forme d'une carte que l'on tourne pour imiter la rotation du ciel date de l'astronome grec de l'Antiquité Hipparque (150 av. J.-C. env.). Le fait que cette rotation s'effectue en quatre minutes de moins que ce que dure une journée signifie que les étoiles se lèvent quatre minutes plus tôt chaque jour, ou une demi-heure plus tôt chaque semaine. Tout au long de l'année, de nouvelles constellations deviennent visibles dans le ciel avant l'aurore, et disparaissent dans le crépuscule en fin de journée."),
-            "more_info": "Pour plus d'informations, voir https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2014\u20132023.",
+            "more_info": "Pour plus d'informations, voir https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2014\u20132024.",
             "glue_here": "COLLER ICI",
             "cut_out_instructions": (
                 r"Découpez cette zone grisée.",
@@ -311,7 +311,7 @@ text = {
                 r"Planisfera to proste, ręczne urządzenie wyświetlające mapę gwiazd widocznych na nocnym niebie w określonym czasie. Obracając koło gwiazdowe, pokazuje, jak gwiazdy poruszają się po niebie w nocy i jak różne konstelacje są widoczne w różnych porach roku.",
                 "",
                 r"Konstelacje nocnego nieba krążą wokół biegunów niebieskich raz na 23 godziny i 56 minut. Pomysł przedstawienia nocnego nieba jako płaskiej mapy, która jest odwracana tak, aby naśladować rotację nocnego nieba, sięga starożytnego greckiego astronoma Hipparcha (około 150 roku p.n.e.). Fakt, że obrót ten trwa o cztery minuty krócej niż długość dnia, oznacza, że ​​gwiazdy wschodzą każdego dnia cztery minuty wcześniej lub pół godziny wcześniej w każdym tygodniu. W ciągu roku na niebie przed świtem widoczne są nowe konstelacje, które znikają w wieczornym zmierzchu."),
-            "more_info": "Więciej informacji znajdziesz na stronie https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2014\u20132023.",
+            "more_info": "Więciej informacji znajdziesz na stronie https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2014\u20132024.",
             "glue_here": "TUTAJ PRZYKLEIĆ",
             "cut_out_instructions": (
                 "Wytnij zacieniony obszar nożyczkami.",
@@ -434,7 +434,7 @@ text = {
                 r"Um planisfério é um dispositivo portátil simples que mostra um mapa cujas estrelas são visíveis no céu noturno a qualquer momento específico. Ao girar a roda estelar, mostra como as estrelas se movem pelo céu durante a noite e como diferentes constelações são visíveis em diferentes épocas do ano.",
                 "",
                 r"As constelações do céu noturno giram em torno dos pólos celestes uma vez a cada 23 horas e 56 minutos. A idéia de representar o céu noturno como um mapa plano, voltado para imitar a rotação do céu noturno, remonta ao antigo astrônomo grego Hiparco (por volta de 150 aC). O fato de essa rotação levar quatro minutos a menos que a duração de um dia significa que as estrelas aumentam quatro minutos mais cedo a cada dia, ou meia hora mais cedo a cada semana. Ao longo do ano, novas constelações se tornam visíveis no céu antes do amanhecer e desaparecem no crepúsculo da noite."),
-            "more_info": "Para mais informações, veja https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2014\u20132023.",
+            "more_info": "Para mais informações, veja https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2014\u20132024.",
             "glue_here": "COLA AQUI",
             "cut_out_instructions": (
                 "Recorte esta área sombreada com uma tesoura.",
@@ -557,7 +557,7 @@ text = {
                 r"Планісфера — це простий портативний пристрій, який показує карту зірок, які видно на нічному небі в будь-який конкретний час. Повертаючи колесо з зірками, воно показує як зірки рухаються за ніч, і як видно різні сузір'я в різні пори року.",
                 "",
                 r"Сузір'я нічного неба обертаються навколо небесних полюсів один раз за 23 години 56 хвилин. Ідея представити нічне небо як плоску карту, яка повертається, щоб імітувати обертання нічного неба, походить від давньогрецького астронома Гіппарха (приблизно 150 р. до н. е.). Той факт, що цей оберт займає на чотири хвилини менше, ніж тривалість дня, означає, що зірки сходять на чотири хвилини раніше щодня або на півгодини раніше щотижня. Протягом року нові сузір'я стають помітними на передсвітанковому небі і зникають у вечірніх сутінках."),
-            "more_info": "Більше інформації на сайті https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2014\u20132023.",
+            "more_info": "Більше інформації на сайті https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2014\u20132024.",
             "glue_here": "ПРИКЛЕЇТИ ТУТ",
             "cut_out_instructions": (
                 "Виріжте цю затінену ділянку ножицями.",
@@ -681,7 +681,7 @@ text = {
                 r"Un planisferio es un dispositivo portátil simple que muestra un mapa de las estrellas visibles en el cielo nocturno en cualquier momento en particular. Al rotar la rueda de estrellas se muestra cómo se mueven las estrellas en el cielo durante la noche, y qué constelaciones son visibles en diferentes momentos del año.",
                 "",
                 r"Las constelaciones en el cielo nocturno giran alrededor de los polos celestes cada 23 horas y 56 minutos. La idea de representar el cielo nocturno como un mapa plano que se gira para emular la rotación del cielo nocturno se remonta al astrónomo Griego antiguo Hiparco de Nicea (alrededor de 150 a.C.). Como esta rotación dura menos que la longitud del día, las estrellas surgen cuatro minutos más temprano cada día, o media hora más temprano cada semana. A lo largo del año se pueden ver nuevas constelaciones en el cielo antes del amanecer, y otras desaparecen antes del atardecer."),
-            "more_info": "Para más información: https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2014\u20132023.",
+            "more_info": "Para más información: https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2014\u20132024.",
             "glue_here": "PEGAR AQUÍ",
             "cut_out_instructions": (
                 "Corta el area sombreada con tijeras.",
