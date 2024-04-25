@@ -29,6 +29,8 @@ import os
 import subprocess
 import time
 
+from typing import Dict, Union
+
 import text
 from alt_az import AltAzGrid
 from holder import Holder
@@ -39,7 +41,7 @@ from starwheel import StarWheel
 os.system("rm -Rf output")
 os.system("mkdir -p output/planispheres output/planisphere_parts")
 
-arguments: dict[str, int | str] = fetch_command_line_arguments()
+arguments: Dict[str, Union[int, str]] = fetch_command_line_arguments()
 theme: str = arguments['theme']
 
 # Render planisphere in all available languages
@@ -58,7 +60,7 @@ for language in text.text:
         southern: bool = latitude < 0
 
         # A dictionary of common substitutions
-        subs: dict[str, str | float] = {
+        subs: Dict[str, Union[str, float]] = {
             "dir_parts": "output/planisphere_parts",
             "dir_out": "output/planispheres",
             "abs_lat": abs(latitude),
@@ -67,7 +69,7 @@ for language in text.text:
             "lang_short": "" if language == "en" else "_{}".format(language)
         }
 
-        settings: dict[str, str | float] = {
+        settings: Dict[str, Union[str, float]] = {
             'language': language,
             'latitude': latitude,
             'theme': theme

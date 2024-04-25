@@ -21,6 +21,7 @@ The file contains global settings for the planisphere.
 """
 
 from math import pi, sin, cos, atan2, asin
+from typing import Dict, Tuple
 
 # Units
 dots_per_inch: float = 200
@@ -66,7 +67,7 @@ def radius(dec: float, latitude: float) -> float:
         return (90 + dec) / dec_span * r_2
 
 
-def transform(alt: float, az: float, latitude: float) -> tuple[float, float]:
+def transform(alt: float, az: float, latitude: float) -> Tuple[float, float]:
     alt *= unit_deg
     az *= unit_deg
     l: float = (90 - latitude) * unit_deg
@@ -85,5 +86,5 @@ def transform(alt: float, az: float, latitude: float) -> tuple[float, float]:
     return ra, dec
 
 
-def pos(r: float, t: float) -> dict[str, float]:
+def pos(r: float, t: float) -> Dict[str, float]:
     return {'x': r * cos(t), 'y': -r * sin(-t)}

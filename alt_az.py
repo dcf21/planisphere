@@ -22,8 +22,8 @@ Render the optional alt-az grid of the planisphere.
 """
 
 from math import atan2
-
 from numpy import arange
+from typing import Dict, List, Tuple
 
 from constants import radius, transform, pos
 from constants import unit_deg, unit_rev, unit_mm, central_hole_size
@@ -43,7 +43,7 @@ class AltAzGrid(BaseComponent):
         """
         return "alt_az_grid"
 
-    def bounding_box(self, settings: dict) -> dict[str, float]:
+    def bounding_box(self, settings: dict) -> Dict[str, float]:
         """
         Return the bounding box of the canvas area used by this component.
 
@@ -55,7 +55,7 @@ class AltAzGrid(BaseComponent):
 
         latitude: float = abs(settings['latitude'])
 
-        bounding_box: dict[str, float] = {
+        bounding_box: Dict[str, float] = {
             'x_min': 0,
             'x_max': 0,
             'y_min': 0,
@@ -69,13 +69,13 @@ class AltAzGrid(BaseComponent):
         if abs(latitude) < 15:
             alt_edge = -9
 
-        path: list[tuple[float, float]] = [
+        path: List[Tuple[float, float]] = [
             transform(alt=alt_edge, az=az, latitude=latitude) for az in arange(0, 360.5, 1)
         ]
 
         for pt in path:
             r_b: float = radius(dec=pt[1] / unit_deg, latitude=latitude)
-            position: dict[str, float] = pos(r_b, pt[0])
+            position: Dict[str, float] = pos(r_b, pt[0])
             bounding_box['x_min'] = min(bounding_box['x_min'], position['x'])
             bounding_box['x_max'] = max(bounding_box['x_max'], position['x'])
             bounding_box['y_min'] = min(bounding_box['y_min'], position['y'])
@@ -113,7 +113,7 @@ class AltAzGrid(BaseComponent):
         alt: float
         for alt in (alt_edge, 0):
             # Draw a line, segment by segment, taking small steps in azimuth
-            path: list[tuple[float, float]] = [
+            path: List[Tuple[float, float]] = [
                 transform(alt=alt, az=az, latitude=latitude) for az in arange(0, 360.5, azimuth_step)
             ]
 
@@ -139,7 +139,7 @@ class AltAzGrid(BaseComponent):
         # Draw lines of constant altitude
         context.begin_path()
         for alt in range(10, 85, 10):
-            path: list[tuple[float, float]] = [
+            path: List[Tuple[float, float]] = [
                 transform(alt=alt, az=az, latitude=latitude) for az in arange(0, 360.5, 1)
             ]
             for i, p in enumerate(path):
@@ -153,7 +153,7 @@ class AltAzGrid(BaseComponent):
         # Draw lines of constant azimuth, marking S,SSE,SE,ESE,E, etc
         context.begin_path()
         for az in arange(0, 359, 22.5):
-            path: list[tuple[float, float]] = [
+            path: List[Tuple[float, float]] = [
                 transform(alt=alt, az=az, latitude=latitude) for alt in arange(0, 90.1, 1)
             ]
             for i, p in enumerate(path):
@@ -166,15 +166,15 @@ class AltAzGrid(BaseComponent):
 
         # Gluing labels
         def make_gluing_label(azimuth: float) -> None:
-            pp: tuple[float, float] = transform(alt=0, az=azimuth - 0.01, latitude=latitude)
+            pp: Tuple[float, float] = transform(alt=0, az=azimuth - 0.01, latitude=latitude)
             r: float = radius(dec=pp[1] / unit_deg, latitude=latitude)
-            p: dict[str, float] = pos(r, pp[0])
+            p: Dict[str, float] = pos(r, pp[0])
 
-            pp2: tuple[float, float] = transform(alt=0, az=azimuth + 0.01, latitude=latitude)
+            pp2: Tuple[float, float] = transform(alt=0, az=azimuth + 0.01, latitude=latitude)
             r2: float = radius(dec=pp2[1] / unit_deg, latitude=latitude)
-            p2: dict[str, float] = pos(r2, pp2[0])
+            p2: Dict[str, float] = pos(r2, pp2[0])
 
-            p3: list[float] = [p2[i] - p[i] for i in ('x', 'y')]
+            p3: List[float] = [p2[i] - p[i] for i in ('x', 'y')]
             tr: float = -unit_rev / 4 - atan2(p3[0], p3[1])
 
             context.text(text=text[language]["glue_here"],

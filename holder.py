@@ -22,8 +22,8 @@ Render the holder for the planisphere.
 """
 
 from math import pi, sin, cos, atan2, asin, hypot
-
 from numpy import arange
+from typing import Dict, List, Tuple
 
 from constants import radius, transform, pos
 from constants import unit_deg, unit_rev, unit_cm, unit_mm, r_1, r_2, fold_gap, central_hole_size, line_width_base
@@ -43,7 +43,7 @@ class Holder(BaseComponent):
         """
         return "holder"
 
-    def bounding_box(self, settings: dict) -> dict[str, float]:
+    def bounding_box(self, settings: dict) -> Dict[str, float]:
         """
         Return the bounding box of the canvas area used by this component.
 
@@ -108,14 +108,14 @@ class Holder(BaseComponent):
         context.stroke()
 
         # Shade the viewing window which needs to be cut out
-        x0: tuple[float, float] = (0, h)
+        x0: Tuple[float, float] = (0, h)
         context.begin_path()
         i: int
         az: float
         for i, az in enumerate(arange(0, 360.5, 1)):
-            pp: tuple[float, float] = transform(alt=0, az=az, latitude=latitude)
+            pp: Tuple[float, float] = transform(alt=0, az=az, latitude=latitude)
             r: float = radius(dec=pp[1] / unit_deg, latitude=latitude)
-            p: dict[str, float] = pos(r=r, t=pp[0])
+            p: Dict[str, float] = pos(r=r, t=pp[0])
             if i == 0:
                 context.move_to(x0[0] + p['x'], -x0[1] + p['y'])
             else:
@@ -133,15 +133,15 @@ class Holder(BaseComponent):
 
         # Cardinal points
         def cardinal(dir: str, ang: float) -> None:
-            pp: tuple[float, float] = transform(alt=0, az=ang - 0.01, latitude=latitude)
+            pp: Tuple[float, float] = transform(alt=0, az=ang - 0.01, latitude=latitude)
             r: float = radius(dec=pp[1] / unit_deg, latitude=latitude)
-            p: dict[str, float] = pos(r, pp[0])
+            p: Dict[str, float] = pos(r, pp[0])
 
-            pp2: tuple[float, float] = transform(alt=0, az=ang + 0.01, latitude=latitude)
+            pp2: Tuple[float, float] = transform(alt=0, az=ang + 0.01, latitude=latitude)
             r2: float = radius(dec=pp2[1] / unit_deg, latitude=latitude)
-            p2: dict[str, float] = pos(r=r2, t=pp2[0])
+            p2: Dict[str, float] = pos(r=r2, t=pp2[0])
 
-            p3: list[float] = [p2[i] - p[i] for i in ('x', 'y')]
+            p3: List[float] = [p2[i] - p[i] for i in ('x', 'y')]
             tr: float = -unit_rev / 4 - atan2(p3[0], p3[1])
 
             context.text(text=dir, x=x0[0] + p['x'], y=-x0[1] + p['y'],

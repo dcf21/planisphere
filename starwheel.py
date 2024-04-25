@@ -22,9 +22,10 @@ Render the star wheel for the planisphere.
 """
 
 import re
-from math import pi, sin, cos, atan2, hypot
 
+from math import pi, sin, cos, atan2, hypot
 from numpy import arange
+from typing import Dict, Tuple
 
 import calendar
 from bright_stars_process import fetch_bright_star_list
@@ -46,7 +47,7 @@ class StarWheel(BaseComponent):
         """
         return "star_wheel"
 
-    def bounding_box(self, settings: dict) -> dict[str, float]:
+    def bounding_box(self, settings: dict) -> Dict[str, float]:
         """
         Return the bounding box of the canvas area used by this component.
 
@@ -77,7 +78,7 @@ class StarWheel(BaseComponent):
         is_southern: bool = settings['latitude'] < 0
         language: str = settings['language']
         latitude: float = abs(settings['latitude'])
-        theme: dict[str, tuple[float, float, float, float]] = themes[settings['theme']]
+        theme: Dict[str, Tuple[float, float, float, float]] = themes[settings['theme']]
 
         context.set_font_size(1.2)
 
@@ -166,9 +167,9 @@ class StarWheel(BaseComponent):
                 if r_point_2 > r_2:
                     continue
 
-                p1: tuple[float, float] = (-r_point_1 * cos(float(ra1) * unit_deg),
+                p1: Tuple[float, float] = (-r_point_1 * cos(float(ra1) * unit_deg),
                                            -r_point_1 * sin(float(ra1) * unit_deg))
-                p2: tuple[float, float] = (-r_point_2 * cos(float(ra2) * unit_deg),
+                p2: Tuple[float, float] = (-r_point_2 * cos(float(ra2) * unit_deg),
                                            -r_point_2 * sin(float(ra2) * unit_deg))
 
                 # Impose a maximum length of 4 cm on constellation stick figures; they get quite distorted at the edge
@@ -240,7 +241,7 @@ class StarWheel(BaseComponent):
                 r: float = radius(dec=dec, latitude=latitude)
                 if r > r_2:
                     continue
-                p: tuple[float, float] = (-r * cos(ra * unit_deg), -r * sin(ra * unit_deg))
+                p: Tuple[float, float] = (-r * cos(ra * unit_deg), -r * sin(ra * unit_deg))
                 a: float = atan2(p[0], p[1])
                 context.text(text=name2, x=p[0], y=p[1], h_align=0, v_align=0, gap=0, rotation=unit_rev / 2 - a)
 
