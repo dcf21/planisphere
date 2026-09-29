@@ -288,6 +288,30 @@ class GraphicsContext:
         """
         self.arc(centre_x=centre_x, centre_y=centre_y, radius=radius, arc_from=0, arc_to=2 * pi)
 
+    def ellipse(self, centre_x: float, centre_y: float, radius_x: float, radius_y: float,
+                rotation: float = 0) -> None:
+        """
+        Add an ellipse to the current path.
+
+        :param centre_x:
+            The centre of the ellipse, metres
+        :param centre_y:
+            The centre of the ellipse, metres
+        :param radius_x:
+            The semi-axis of the ellipse along its x direction (before rotation), metres
+        :param radius_y:
+            The semi-axis of the ellipse along its y direction (before rotation), metres
+        :param rotation:
+            The rotation angle of the ellipse, radians
+        """
+        self.context.new_sub_path()
+        self.context.save()
+        self.context.translate(tx=centre_x, ty=centre_y)
+        self.context.rotate(radians=rotation)
+        self.context.scale(sx=radius_x, sy=radius_y)
+        self.context.arc(xc=0, yc=0, radius=1, angle1=0, angle2=2 * pi)
+        self.context.restore()
+
     def rectangle(self, x0: float, y0: float, x1: float, y1: float) -> None:
         """
         Add a rectangle to the current path.

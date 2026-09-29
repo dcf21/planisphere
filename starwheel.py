@@ -23,9 +23,9 @@ Render the star wheel for the planisphere.
 
 import re
 
-from math import pi, sin, cos, atan2, hypot
+from math import pi, sin, cos, atan2, hypot, sqrt
 from numpy import arange
-from typing import Dict, Tuple
+from typing import Dict, List, Tuple
 
 import calendar
 from bright_stars_process import fetch_bright_star_list
@@ -208,6 +208,122 @@ class StarWheel(BaseComponent):
                            radius=0.18 * unit_mm * (5 - mag))
             context.fill(color=theme['star'])
 
+        # Mark the brightest deep-sky objects, if requested
+        if settings.get('deep_sky', False):
+            context.set_font_size(0.6)
+            label_height: float = context.measure_text("M")['height']
+
+            # Scale of the star chart, in metres per degree of declination
+            scale: float = abs(radius(dec=1, latitude=latitude) - radius(dec=0, latitude=latitude))
+
+            # Smallest size of symbol that we draw, so that compact objects remain visible
+            min_symbol_radius: float = 0.8 * unit_mm
+
+            with open("raw_data/deep_sky_objects.dat", "rt", encoding="utf-8") as f_in:
+                for line in f_in:
+                    line: str = line.strip()
+
+                    # Ignore blank lines and comment lines
+                    if (len(line) == 0) or (line[0] == '#'):
+                        continue
+
+                    # Split line into words
+                    words: List[str] = line.split()
+                    name, ra_str, dec_str, obj_type, mag_str, major_str, minor_str = words[:7]
+
+                    # Each object has separate label positions for northern and southern planispheres
+                    label_pos: str = words[8] if is_southern else words[7]
+
+                    ra: float = float(ra_str) * 360. / 24
+                    dec: float = float(dec_str)
+
+                    # If we're making a southern hemisphere planisphere, we flip the sky upside down
+                    if is_southern:
+                        ra = -ra
+                        dec = -dec
+
+                    r: float = radius(dec=dec, latitude=latitude)
+                    if r > r_2:
+                        continue
+                    p: Tuple[float, float] = (-r * cos(ra * unit_deg), -r * sin(ra * unit_deg))
+
+                    # Orientate symbols and labels in the same way as the constellation names
+                    rotation: float = unit_rev / 2 - atan2(p[0], p[1])
+
+                    # Draw each object at its true angular size, but no smaller than a minimum size
+                    major_axis: float = float(major_str)
+                    minor_axis: float = float(minor_str)
+                    r_major: float = max(min_symbol_radius, major_axis / 60 / 2 * scale)
+                    r_minor: float = r_major * minor_axis / major_axis
+
+                    # Draw a symbol representing the type of object, using the conventions of printed star atlases
+                    context.begin_path()
+                    if obj_type == "G":
+                        # Galaxies are ellipses
+                        context.ellipse(centre_x=p[0], centre_y=p[1], radius_x=r_major, radius_y=r_minor,
+                                        rotation=rotation)
+                        context.stroke(color=theme['deep_sky'], line_width=1, dotted=False)
+                    elif obj_type == "OC":
+                        # Open clusters are dotted circles
+                        context.circle(centre_x=p[0], centre_y=p[1], radius=r_major)
+                        context.stroke(color=theme['deep_sky'], line_width=1, dotted=True)
+                    elif obj_type == "GC":
+                        # Globular clusters are circles with a cross
+                        context.circle(centre_x=p[0], centre_y=p[1], radius=r_major)
+                        for angle in (rotation, rotation + pi / 2):
+                            context.move_to(x=p[0] - r_major * cos(angle), y=p[1] - r_major * sin(angle))
+                            context.line_to(x=p[0] + r_major * cos(angle), y=p[1] + r_major * sin(angle))
+                        context.stroke(color=theme['deep_sky'], line_width=1, dotted=False)
+                    else:
+                        # Nebulae are squares
+                        for i, angle in enumerate(arange(pi / 4, 2 * pi, pi / 2)):
+                            corner: Tuple[float, float] = (p[0] + r_major * sqrt(2) * cos(rotation + angle),
+                                                           p[1] + r_major * sqrt(2) * sin(rotation + angle))
+                            if i == 0:
+                                context.move_to(x=corner[0], y=corner[1])
+                            else:
+                                context.line_to(x=corner[0], y=corner[1])
+                        context.close_path()
+                        context.stroke(color=theme['deep_sky'], line_width=1, dotted=False)
+
+                    # Write the label next to the symbol, followed by the common name of the most famous objects
+                    labels: List[str] = [re.sub("_", " ", name)]
+                    if name in text[language]['deep_sky_names']:
+                        labels.append(text[language]['deep_sky_names'][name])
+
+                    # Work out where the first line of the label goes, in the frame of the rotated text, where
+                    # (u, v) point rightwards and downwards along the text
+                    line_spacing: float = label_height * 1.3
+                    block_height: float = label_height + line_spacing * (len(labels) - 1)
+                    gap: float = 0.3 * unit_mm
+                    r_across: float = r_minor if obj_type == "G" else r_major
+                    h_align: int = 0
+                    u: float = 0
+
+                    # Labels to the left or right of the symbol have their first line level with the symbol. Further
+                    # lines go beneath it, or above it if the position has the suffix "_up".
+                    if label_pos.endswith("_up"):
+                        label_pos = label_pos[:-3]
+                        line_spacing = -line_spacing
+
+                    if label_pos == "above":
+                        v: float = -(r_across + gap + block_height - label_height / 2)
+                    elif label_pos == "left":
+                        u, v, h_align = -(r_major + gap), 0, 1
+                    elif label_pos == "right":
+                        u, v, h_align = r_major + gap, 0, -1
+                    elif label_pos == "centre":
+                        v = -(block_height - label_height) / 2
+                    else:
+                        v = r_across + gap + label_height / 2
+
+                    for label in labels:
+                        context.text(text=label,
+                                     x=p[0] + u * cos(rotation) - v * sin(rotation),
+                                     y=p[1] + u * sin(rotation) + v * cos(rotation),
+                                     h_align=h_align, v_align=0, gap=0, rotation=rotation)
+                        v += line_spacing
+
         # Write constellation names
         context.set_font_size(0.7)
         context.set_color(theme['constellation'])
@@ -328,6 +444,7 @@ if __name__ == "__main__":
         'latitude': arguments['latitude'],
         'language': 'en',
         'theme': arguments['theme'],
+        'deep_sky': arguments['deep_sky']
     }).render_to_file(
         filename=arguments['filename'],
         img_format=arguments['img_format'],

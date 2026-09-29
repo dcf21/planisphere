@@ -43,6 +43,7 @@ os.system("mkdir -p output/planispheres output/planisphere_parts")
 
 arguments: Dict[str, Union[int, str]] = fetch_command_line_arguments()
 theme: str = arguments['theme']
+deep_sky: bool = arguments['deep_sky']
 
 # Render planisphere in all available languages
 language: str
@@ -72,7 +73,8 @@ for language in text.text:
         settings: Dict[str, Union[str, float]] = {
             'language': language,
             'latitude': latitude,
-            'theme': theme
+            'theme': theme,
+            'deep_sky': deep_sky
         }
 
         # Render the various parts of the planisphere

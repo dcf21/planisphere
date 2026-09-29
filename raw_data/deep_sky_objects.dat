@@ -1,0 +1,50 @@
+# deep_sky_objects.dat
+# -*- coding: utf-8 -*-
+#
+# A list of the brightest deep-sky objects, which are visible to the naked eye
+# or through binoculars, to be marked on the star wheel.
+#
+# Columns:
+# 1. Label (underscores are turned into spaces)
+# 2. Right ascension, J2000, hours
+# 3. Declination, J2000, degrees
+# 4. Type: G = galaxy; OC = open cluster; GC = globular cluster; N = nebula
+# 5. Visual magnitude
+# 6. Major axis, arcminutes
+# 7. Minor axis, arcminutes
+# 8. Position of the label relative to the symbol on northern planispheres:
+#    below, above, left, right or centre (inside the symbol). These are
+#    relative to the reading direction of the label, whose bottom faces the
+#    centre of the star wheel. For labels on the left or right, a second line
+#    (the common name) goes beneath the first, or above it with the suffix _up
+#    (left_up, right_up).
+# 9. Position of the label relative to the symbol on southern planispheres.
+
+# Northern sky
+M31           0.712   41.27  G    3.4  190  60  left_up  below
+M33           1.564   30.66  G    5.7   73  45  above  below
+h+χ_Per       2.348   57.14  OC   3.7   60  30  right  below
+M45           3.790   24.12  OC   1.6  110 110  below  below
+M42           5.588   -5.39  N    4.0   85  60  right  left
+M35           6.148   24.33  OC   5.1   28  28  below  below
+M41           6.767  -20.73  OC   4.5   38  38  above  below
+M47           7.610  -14.48  OC   4.2   30  30  below  below
+M44           8.673   19.67  OC   3.7   95  95  above  below
+M81           9.926   69.07  G    6.9   27  14  below  below
+M3           13.703   28.38  GC   6.2   18  18  below  below
+M5           15.309    2.08  GC   5.6   23  23  below  below
+M4           16.393  -26.53  GC   5.6   36  36  below  below
+M13          16.695   36.46  GC   5.8   20  20  below  below
+M6           17.672  -32.25  OC   4.2   25  25  below  above
+M7           17.898  -34.79  OC   3.3   80  80  below  above
+M8           18.060  -24.38  N    6.0   90  40  below  below
+M22          18.607  -23.90  GC   5.1   32  32  below  below
+M11          18.852   -6.27  OC   5.8   14  14  below  above
+M39          21.528   48.43  OC   4.6   32  32  below  below
+
+# Southern sky
+47_Tuc        0.401  -72.08  GC   4.1   50  50  below  right
+SMC           0.879  -72.82  G    2.7  320 185  below  left
+LMC           5.393  -69.76  G    0.9  645 550  centre centre
+NGC_3372     10.753  -59.87  N    1.0  120 120  below  above
+ω_Cen        13.446  -47.48  GC   3.7   36  36  right  below

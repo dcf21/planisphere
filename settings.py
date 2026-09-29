@@ -42,11 +42,14 @@ def fetch_command_line_arguments(default_filename: str = '') -> Dict[str, Union[
                         help="Filename for output, without a file type suffix.")
     parser.add_argument('--theme', dest='theme', choices=["default", "dark"], default="default",
                         help="Color theme to be used in the planisphere.")
+    parser.add_argument('--deep-sky', dest='deep_sky', action='store_true',
+                        help="Mark the brightest deep-sky objects (galaxies, star clusters, nebulae) on the star wheel.")
     args = parser.parse_args()
 
     return {
         "latitude": args.latitude,
         "img_format": args.img_format,
         "filename": args.filename,
-        "theme": args.theme
+        "theme": args.theme,
+        "deep_sky": args.deep_sky
     }
