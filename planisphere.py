@@ -43,6 +43,8 @@ os.system("mkdir -p output/planispheres output/planisphere_parts")
 
 arguments: Dict[str, Union[int, str]] = fetch_command_line_arguments()
 theme: str = arguments['theme']
+time_format: str = arguments['time_format']
+dst: bool = arguments['dst']
 
 # Render planisphere in all available languages
 language: str
@@ -72,7 +74,9 @@ for language in text.text:
         settings: Dict[str, Union[str, float]] = {
             'language': language,
             'latitude': latitude,
-            'theme': theme
+            'theme': theme,
+            'time_format': time_format,
+            'dst': dst
         }
 
         # Render the various parts of the planisphere
@@ -97,6 +101,10 @@ for language in text.text:
 
         with open("doc/tmp/lat.tex", "wt") as f:
             f.write(r"${abs_lat:d}^\circ${ns}".format(**subs))
+
+        # Tell LaTeX whether daylight saving times are printed in brackets on the clock face
+        with open("doc/tmp/dst.tex", "wt") as f:
+            f.write(r"\dsttrue" if dst else r"\dstfalse")
 
         # Wait for cairo to wake up and close the files
         time.sleep(1)

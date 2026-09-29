@@ -39,6 +39,10 @@
 \author{Dominic Ford}
 \date{2014--2024}
 
+% Switch, set by planisphere.py, for whether daylight saving times are printed on the clock face
+\newif\ifdst
+\input{tmp/dst}
+
 \begin{document}
 \maketitle
 \setcounter{footnote}{1}
@@ -134,6 +138,26 @@ degrees above the horizon. For reference, a distance of ten degrees roughly
 equates to a hand-span at arm's length. The curved lines are vertical lines
 connecting points on the horizon up to the point immediately above your head.
 They are drawn in the cardinal directions S, SSE, SE, ESE, E, etc.
+
+\subsection*{Which time to use}
+
+The times printed on the clock face of the planisphere are local mean solar
+time, which is not quite the same as the time shown by your watch. For every
+degree of longitude that you are west of the central meridian of your time
+zone, subtract four minutes from your clock time; if you are east of it, add
+four minutes. For example, Central European Time (CET) is based on the meridian
+at 15$^\circ$E: in Cologne (7$^\circ$E) you should subtract 32 minutes, and in Warsaw
+(21$^\circ$E) you should add 24 minutes.
+
+\ifdst
+The times printed in brackets on the clock face already include daylight saving
+time (e.g.\ Central European Summer Time, CEST), which is one hour ahead. While
+daylight saving time is in force, use the times in brackets instead of
+subtracting an hour yourself.
+\else
+While daylight saving time is in force (e.g.\ Central European Summer Time,
+CEST), subtract a further hour from your clock time.
+\fi
 
 \section*{Customised planispheres}
 

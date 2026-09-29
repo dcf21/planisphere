@@ -41,6 +41,10 @@
 \author{Dominic Ford}
 \date{2014--2024}
 
+% Switch, set by planisphere.py, for whether daylight saving times are printed on the clock face
+\newif\ifdst
+\input{tmp/dst}
+
 \begin{document}
 \maketitle
 \setcounter{footnote}{1}
@@ -90,6 +94,16 @@ Tournez-vous vers l’est ou l’ouest, et faites pivoter le cherche-étoiles de
 
 Si vous avez imprimé la grille des lignes d’altitude et d’azimut sur un transparent, celles-ci vous permettent de déterminer à quelle hauteur les objets apparaissent dans le ciel et dans quelle direction. Les cercles sont dessinés à des altitudes de 10, 20, 30...80 degrés au-dessus de l’horizon. À titre de comparaison, une distance de 10$^\circ$ équivaut à peu près à la largeur de la main lorsqu’on tend le bras. Les lignes courbes sont des verticales reliant des points sur l’horizon au point situé juste au-dessus de votre tête. Elles sont placées aux points cardinaux S, SSE, SE, ESE, E, etc.
 
+
+\subsection*{Quelle heure utiliser?}
+
+Les heures indiquées sur le cadran du cherche-étoiles sont en temps solaire moyen local, ce qui n’est pas tout à fait l’heure de votre montre. Pour chaque degré de longitude à l’ouest du méridien de référence de votre fuseau horaire, retranchez quatre minutes à l’heure légale ; à l’est, ajoutez quatre minutes. Par exemple, l’heure d’Europe centrale est basée sur le méridien 15$^\circ$~E : à Paris (2,3$^\circ$~E), il faut retrancher environ 51 minutes.
+
+\ifdst
+Les heures indiquées entre parenthèses sur le cadran tiennent déjà compte de l’heure d’été, qui avance d’une heure. Pendant l’heure d’été, utilisez donc les heures entre parenthèses au lieu de retrancher vous-même une heure.
+\else
+Pendant l’heure d’été, retranchez en plus une heure.
+\fi
 
 \section*{License}
 

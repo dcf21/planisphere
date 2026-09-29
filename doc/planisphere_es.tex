@@ -41,6 +41,10 @@
 \author{Dominic Ford}
 \date{2014--2024}
 
+% Switch, set by planisphere.py, for whether daylight saving times are printed on the clock face
+\newif\ifdst
+\input{tmp/dst}
+
 \begin{document}
 \maketitle
 \setcounter{footnote}{1}
@@ -130,6 +134,23 @@ sobre el horizonte. Como referencia, una distancia de 10 grados equivale a la
 medida de una palma con el brazo extendido. Las líneas curvas son líneas verticales
 uniendo puntos del horizonte con el punto exactamente sobre tu cabeza. Están
 dibujadas en los puntos cardinales: S, SSE, SE, ESE, E, etc.
+
+\subsection*{Qué hora usar}
+
+Las horas impresas en la escala del planisferio son hora solar media local, que
+no es exactamente la hora de tu reloj. Por cada grado de longitud que estés al
+oeste del meridiano de referencia de tu huso horario, resta cuatro minutos a la
+hora del reloj; si estás al este, suma cuatro minutos. Por ejemplo, la hora de
+Europa Central se basa en el meridiano 15$^\circ$~E: en Madrid (3,7$^\circ$~O) debes restar
+unos 75 minutos.
+
+\ifdst
+Las horas entre paréntesis en la escala ya incluyen el horario de verano, que va
+una hora adelantado. Mientras rija el horario de verano, usa las horas entre
+paréntesis en lugar de restar tú mismo una hora.
+\else
+Mientras rija el horario de verano, resta además una hora.
+\fi
 
 \section*{Planisferios personalizados}
 

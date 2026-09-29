@@ -41,6 +41,10 @@
 \author{Dominic Ford}
 \date{2014--2024}
 
+% Switch, set by planisphere.py, for whether daylight saving times are printed on the clock face
+\newif\ifdst
+\input{tmp/dst}
+
 \begin{document}
 \maketitle
 \setcounter{footnote}{1}
@@ -137,6 +141,24 @@ graus acima do horizonte. Para referência, uma distância de dez graus aproxima
 equivale a uma extensão de mão no comprimento do braço. As linhas curvas são linhas 
 verticais pontos de conexão no horizonte até o ponto imediatamente acima da cabeça.
 Eles são desenhados nas direções cardinais S, SSE, SE, ESE, E, etc.
+
+\subsection*{Qual horário usar}
+
+Os horários impressos na escala do planisfério são a hora solar média local, que
+não é exatamente a hora do seu relógio. Para cada grau de longitude a oeste do
+meridiano de referência do seu fuso horário, subtraia quatro minutos da hora do
+relógio; a leste, some quatro minutos. Por exemplo, o horário de Brasília se
+baseia no meridiano 45$^\circ$~O: em São Paulo (46,6$^\circ$~O) subtraia cerca de 7 minutos.
+Em Lisboa (9,1$^\circ$~O), cujo fuso se baseia no meridiano 0$^\circ$, subtraia cerca de
+37 minutos.
+
+\ifdst
+Os horários entre parênteses na escala já incluem o horário de verão, que está
+uma hora adiantado. Enquanto vigorar o horário de verão, use os horários entre
+parênteses em vez de subtrair uma hora.
+\else
+Enquanto vigorar o horário de verão, subtraia mais uma hora.
+\fi
 
 \section*{Planisférios personalizados}
 

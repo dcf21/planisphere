@@ -42,11 +42,18 @@ def fetch_command_line_arguments(default_filename: str = '') -> Dict[str, Union[
                         help="Filename for output, without a file type suffix.")
     parser.add_argument('--theme', dest='theme', choices=["default", "dark"], default="default",
                         help="Color theme to be used in the planisphere.")
+    parser.add_argument('--time-format', dest='time_format', choices=["auto", "12h", "24h"], default="auto",
+                        help="Clock format on the planisphere holder: 12-hour (AM/PM) or 24-hour. "
+                             "'auto' picks a format based on the language.")
+    parser.add_argument('--dst', dest='dst', action='store_true',
+                        help="Additionally print daylight saving time (+1 hour) in brackets after each hour.")
     args = parser.parse_args()
 
     return {
         "latitude": args.latitude,
         "img_format": args.img_format,
         "filename": args.filename,
-        "theme": args.theme
+        "theme": args.theme,
+        "time_format": args.time_format,
+        "dst": args.dst
     }
