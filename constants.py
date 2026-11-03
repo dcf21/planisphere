@@ -3,7 +3,7 @@
 #
 # The python script in this file makes the various parts of a model planisphere.
 #
-# Copyright (C) 2014-2024 Dominic Ford <https://dcford.org.uk/>
+# Copyright (C) 2014-2026 Dominic Ford <https://dcford.org.uk/>
 #
 # This code is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -60,6 +60,16 @@ r_2: float = r_1 - r_gap
 
 
 def radius(dec: float, latitude: float) -> float:
+    """
+    Calculate the distance of a given declination from the centre of the planisphere.
+
+    :param dec:
+        Declination, degrees.
+    :param latitude:
+        The latitude of the observer that the planisphere is designed for, degrees.
+    :return:
+        Distance from the centre of the planisphere.
+    """
     dec_span: float = (90 + (90 - latitude)) * 1.125
     if latitude >= 0:
         return (90 - dec) / dec_span * r_2
@@ -68,6 +78,19 @@ def radius(dec: float, latitude: float) -> float:
 
 
 def transform(alt: float, az: float, latitude: float) -> Tuple[float, float]:
+    """
+    Convert a position in the sky from altitude and azimuth into the angle and declination at which it is drawn on
+    the planisphere.
+
+    :param alt:
+        Altitude, degrees.
+    :param az:
+        Azimuth, degrees.
+    :param latitude:
+        The latitude of the observer that the planisphere is designed for, degrees.
+    :return:
+        Tuple of (position angle around the centre of the planisphere, declination), radians.
+    """
     alt *= unit_deg
     az *= unit_deg
     l: float = (90 - latitude) * unit_deg
@@ -87,4 +110,14 @@ def transform(alt: float, az: float, latitude: float) -> Tuple[float, float]:
 
 
 def pos(r: float, t: float) -> Dict[str, float]:
+    """
+    Convert polar coordinates around the centre of the planisphere into Cartesian coordinates.
+
+    :param r:
+        Distance from the centre of the planisphere.
+    :param t:
+        Position angle around the centre of the planisphere, radians.
+    :return:
+        Dictionary containing the <x> and <y> coordinates.
+    """
     return {'x': r * cos(t), 'y': -r * sin(-t)}

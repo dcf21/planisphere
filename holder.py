@@ -4,7 +4,7 @@
 #
 # The python script in this file makes the various parts of a model planisphere.
 #
-# Copyright (C) 2014-2024 Dominic Ford <https://dcford.org.uk/>
+# Copyright (C) 2014-2026 Dominic Ford <https://dcford.org.uk/>
 #
 # This code is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -133,6 +133,16 @@ class Holder(BaseComponent):
 
         # Cardinal points
         def cardinal(dir: str, ang: float) -> None:
+            """
+            Write the name of a cardinal point at the edge of the viewing window, aligned with the horizon.
+
+            :param dir:
+                The text to write, e.g. "N".
+            :param ang:
+                The azimuth of the cardinal point, degrees.
+            :return:
+                None
+            """
             pp: Tuple[float, float] = transform(alt=0, az=ang - 0.01, latitude=latitude)
             r: float = radius(dec=pp[1] / unit_deg, latitude=latitude)
             p: Dict[str, float] = pos(r, pp[0])
