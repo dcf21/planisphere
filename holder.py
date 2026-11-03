@@ -256,8 +256,13 @@ class Holder(BaseComponent):
                 x=0, y=-4.0 * unit_cm,
                 h_align=0, v_align=0, gap=0, rotation=0)
             context.set_font_size(1)
+            # The direction the user should face. Most languages use the lower-case name of the cardinal point, but
+            # some (e.g. German, which capitalises nouns) give the word to use explicitly.
+            cardinal_words: Dict[str, str] = text[language].get(
+                'cardinal_instructions',
+                {key: value.lower() for key, value in text[language]['cardinal_points'].items()})
             context.text_wrapped(
-                text=text[language]['instructions_2'].format(cardinal=text[language]['cardinal_points']['n' if not is_southern else 's'].lower()),
+                text=text[language]['instructions_2'].format(cardinal=cardinal_words['n' if not is_southern else 's']),
                 x=0, y=-3.4 * unit_cm, width=4.5 * unit_cm, justify=-1,
                 h_align=0, v_align=1, rotation=0)
 

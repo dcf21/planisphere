@@ -60,7 +60,7 @@ text: Dict[str, dict] = {
         {
             "title": "PLANISPHÄRE",
             "instructions_1": "Drehen Sie das Sternenrad bis Sie am äußeren Rand das heutige Datum finden und bringen Sie es in eine Linie mit der jetzigen Uhrzeit. Das Sichtfenster zeigt Ihnen nun alle Konstellationen, die Sie im Himmel sehen können.",
-            "instructions_2": "Gehen Sie nach draußen und schauen Sie nach Norden. Halten Sie die Planisphäre hoch in den Himmel. Die Sterne am unteren Ende des Sichtfensters sollten mit den Sternen übereinstimmen, welche Sie im Himmel vor sich sehen können.",
+            "instructions_2": "Gehen Sie nach draußen und schauen Sie nach {cardinal}. Halten Sie die Planisphäre hoch in den Himmel. Die Sterne am unteren Ende des Sichtfensters sollten mit den Sternen übereinstimmen, welche Sie im Himmel vor sich sehen können.",
             "instructions_3": """Drehen Sie sich nach Osten oder Westen. Dann drehen Sie die gesamte Planisphäre, so dass „Osten" oder „Westen" nach unten zeigen. Abermals stimmen die Sterne am unteren Rand des Sichtfensters mit denen am Himmel vor Ihnen überein.""",
             "instructions_4": (
                 r"Eine Planisphäre ist ein einfaches Hilfsmittel das eine Karte der Sterne zeigt, welche nachts um eine ausgewählte Uhrzeit zu sehen sind. Durch Drehen des Sternenrads wird angezeigt wie die Sterne über den Himmel wandern und wie verschiedene Konstellationen über das Jahr hinweg sichtbar sind.",
@@ -75,6 +75,7 @@ text: Dict[str, dict] = {
 
             ),
             "cardinal_points": {"n": "NORDEN", "s": "SÜDEN", "w": "WESTEN", "e": "OSTEN"},
+            "cardinal_instructions": {"n": "Norden", "s": "Süden"},
             "months": [
                 [31, "JANUAR"],
                 [28, "FEBRUAR"],
@@ -184,7 +185,7 @@ text: Dict[str, dict] = {
         {
             "title": r"CHERCHE-ÉTOILES",
             "instructions_1": r"Tournez le disque de la carte du ciel jusqu'à trouver sur son pourtour le point où est inscrite la date du jour et alignez ce point avec l'heure actuelle. La fenêtre de visualisation montre maintenant toutes les constellations visibles dans le ciel.",
-            "instructions_2": r"""Allez dehors et tournez-vous de manière à faire face au nord. Avec le cherche-étoiles tenu à bout de bras et le ciel en arrière-plan, les étoiles figurant au bas de la fenêtre de visualisation doivent co\"incider avec celles que vous voyez dans le ciel devant vous.""",
+            "instructions_2": r"""Allez dehors et tournez-vous de manière à faire face au {cardinal}. Avec le cherche-étoiles tenu à bout de bras et le ciel en arrière-plan, les étoiles figurant au bas de la fenêtre de visualisation doivent co\"incider avec celles que vous voyez dans le ciel devant vous.""",
             "instructions_3": r"Tournez-vous vers l'est ou l'ouest, et faites pivoter le cherche-étoiles de sorte que le mot ``Est'' ou ``Ouest'' soit en bas de la fenêtre. Là encore, les étoiles dans la partie inférieure de la fenêtre de visualisation doivent correspondre à celles que vous voyez devant vous dans le ciel.",
             "instructions_4": (
                 r"Un cherche-étoiles est un accessoire de poche simple fournissant une carte des étoiles visibles dans le ciel à un instant donné. Au moyen d'un disque rotatif, il montre comment les étoiles se déplacent dans le ciel pendant la nuit et la manière dont différentes constellations sont visibles selon la période de l'année.",
@@ -307,7 +308,7 @@ text: Dict[str, dict] = {
         {
             "title": "PLANISFERA",
             "instructions_1": "Obracaj kołem gwiazdowym, aż znajdziesz punkt na jego krawędzi, w którym zaznaczona jest dzisiejsza data i zrównaj ten punkt z bieżącym czasem. Okno podglądu pokazuje teraz wszystkie konstelacje widoczne na niebie.",
-            "instructions_2": "Wyjdź na zewnątrz i skieruj się na północ. Trzymaj planisferę wysoko na niebie. Gwiazdy na dole okienka obserwacyjnego powinny odpowiadać gwiazdom, które widzisz na niebie przed sobą.",
+            "instructions_2": "Wyjdź na zewnątrz i skieruj się na {cardinal}. Trzymaj planisferę wysoko na niebie. Gwiazdy na dole okienka obserwacyjnego powinny odpowiadać gwiazdom, które widzisz na niebie przed sobą.",
             "instructions_3": """Zwróć się w stronę wschodu lub zachodu i obróć planisferę tak, aby słowo „Wschód” lub „Zachód” znalazło się na dole okna. Powtórzę raz jeszcze: gwiazdy na dole okienka obserwacyjnego powinny odpowiadać gwiazdom, które widzisz na niebie przed sobą.""",
             "instructions_4": (
                 r"Planisfera to proste, ręczne urządzenie wyświetlające mapę gwiazd widocznych na nocnym niebie w określonym czasie. Obracając koło gwiazdowe, pokazuje, jak gwiazdy poruszają się po niebie w nocy i jak różne konstelacje są widoczne w różnych porach roku.",
@@ -553,7 +554,7 @@ text: Dict[str, dict] = {
         {
             "title": "ПЛАНІСФЕРА",
             "instructions_1": "Повертайте колесо з зірками доки не знайдете точку на його краю з сьогоднішньою датою та вирівняйте її з поточним часом. Тепер у оглядовому вікні відображаються всі сузір’я, видимі на небі.",
-            "instructions_2": "Вийдіть на вулицю та поверніться обличчям на північ. Тримаючи планісферу над небом, зірки зображені внизу оглядового вікна повинні відповідати тим які ви бачите на небі перед собою.",
+            "instructions_2": "Вийдіть на вулицю та поверніться обличчям на {cardinal}. Тримаючи планісферу над небом, зірки зображені внизу оглядового вікна повинні відповідати тим які ви бачите на небі перед собою.",
             "instructions_3": """Поверніться обличчям на схід або захід, і поверніть планісферу так, щоб слово «Схід» або «Захід» було внизу вікна. Та знов, зірки зображені внизу оглядового вікна повинні відповідати тим які ви бачите на небі перед собою.""",
             "instructions_4": (
                 r"Планісфера — це простий портативний пристрій, який показує карту зірок, які видно на нічному небі в будь-який конкретний час. Повертаючи колесо з зірками, воно показує як зірки рухаються за ніч, і як видно різні сузір'я в різні пори року.",
