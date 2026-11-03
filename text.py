@@ -675,20 +675,19 @@ text: Dict[str, dict] = {
     "es":
         {
             "title": "PLANISFERIO",
-            "instructions_1": "Gira la rueda de estrellas hasta encontrar el punto del borde donde está la fecha del día, y alínealo con la hora actual. El visor ahora muestra todas las constelaciones visibles en el cielo.",
-            "instructions_2": "Ve afuera y apunta al {cardinal}. Sosteniendo el planisferio hacia el cielo, las estrellas indicadas en el borde inferior del visor deberían coincidir con las que ves en el cielo frente a ti",
-            "instructions_3": """Gira hacia el Este o el Oeste, y gira el planisferio hasta que la palabra "Este" u "Oeste" esté en la parte inferior del visor. Nuevamente, las estrellas en el borde inferior deberían coincidir con lo que ves en el cielo frente a ti""",
+            "instructions_1": "Gira la rueda de estrellas hasta encontrar en el borde la fecha de hoy, y ponla frente a la hora actual. La ventana muestra ahora todas las constelaciones que se ven en el cielo.",
+            "instructions_2": "Sal al exterior y mira hacia el {cardinal}. Con el planisferio levantado hacia el cielo, las estrellas de la parte de abajo de la ventana coinciden con las que ves delante de ti.",
+            "instructions_3": """Mira hacia el este o el oeste y gira el planisferio para que la palabra "Este" u "Oeste" quede abajo en la ventana. De nuevo, las estrellas de la parte de abajo de la ventana coinciden con las que ves delante de ti.""",
             "instructions_4": (
-
-                r"Un planisferio es un dispositivo portátil simple que muestra un mapa de las estrellas visibles en el cielo nocturno en cualquier momento en particular. Al rotar la rueda de estrellas se muestra cómo se mueven las estrellas en el cielo durante la noche, y qué constelaciones son visibles en diferentes momentos del año.",
+                r"Un planisferio es un instrumento sencillo que muestra un mapa de las estrellas que se ven en el cielo nocturno en cada momento. Al girar la rueda de estrellas, se ve cómo se mueven por el cielo a lo largo de la noche y qué constelaciones se ven en cada época del año.",
                 "",
-                r"Las constelaciones en el cielo nocturno giran alrededor de los polos celestes cada 23 horas y 56 minutos. La idea de representar el cielo nocturno como un mapa plano que se gira para emular la rotación del cielo nocturno se remonta al astrónomo Griego antiguo Hiparco de Nicea (alrededor de 150 a.C.). Como esta rotación dura menos que la longitud del día, las estrellas surgen cuatro minutos más temprano cada día, o media hora más temprano cada semana. A lo largo del año se pueden ver nuevas constelaciones en el cielo antes del amanecer, y otras desaparecen antes del atardecer."),
-            "more_info": "Para más información: https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2014\u20132024.",
+                r"Las constelaciones del cielo nocturno dan una vuelta alrededor de los polos celestes cada 23 horas y 56 minutos. La idea de representar el cielo como un mapa plano que gira para imitar su movimiento se remonta al astrónomo griego Hiparco (hacia el 150 a. C.). Como esa vuelta dura cuatro minutos menos que un día, las estrellas salen cuatro minutos antes cada día, o media hora antes cada semana. A lo largo del año, nuevas constelaciones aparecen en el cielo antes del amanecer y otras se pierden en el crepúsculo de la tarde."),
+            "more_info": "Más información en https://in-the-sky.org/planisphere       \u00A9 Dominic Ford 2014\u20132024.",
             "glue_here": "PEGAR AQUÍ",
             "cut_out_instructions": (
-                "Corta el area sombreada con tijeras.",
+                "Recorta con tijeras esta zona sombreada.",
                 "",
-                "Esto será el visor a través del que mirarás la rueda de estrellas."
+                "Será la ventana por la que mirarás la rueda de estrellas."
             ),
             "cardinal_points": {"n": "NORTE", "s": "SUR", "w": "OESTE", "e": "ESTE"},
             "months": [
@@ -706,7 +705,26 @@ text: Dict[str, dict] = {
                 [31, "DICIEMBRE"]
             ],
             "constellation_translations": {
-
+                "Andromeda": "Andrómeda", "Antlia": "Máquina_Neumática", "Apus": "Ave_del_Paraíso", "Aquarius": "Acuario",
+                "Aquila": "Águila", "Ara": "Altar", "Aries": "Aries", "Auriga": "Cochero", "Boötes": "Boyero",
+                "Caelum": "Buril", "Camelopardalis": "Jirafa", "Cancer": "Cáncer", "Canes_Venatici": "Lebreles",
+                "Canis_Major": "Can_Mayor", "Canis_Minor": "Can_Menor", "Capricornus": "Capricornio", "Carina": "Quilla",
+                "Cassiopeia": "Casiopea", "Centaurus": "Centauro", "Cepheus": "Cefeo", "Cetus": "Ballena",
+                "Chamaeleon": "Camaleón", "Circinus": "Compás", "Columba": "Paloma", "Coma_Berenices": "Cabellera_de_Berenice",
+                "Corona_Australis": "Corona_Austral", "Corona_Borealis": "Corona_Boreal", "Corvus": "Cuervo", "Crater": "Copa",
+                "Crux": "Cruz_del_Sur", "Cygnus": "Cisne", "Delphinus": "Delfín", "Dorado": "Dorado", "Draco": "Dragón",
+                "Equuleus": "Caballo_Menor", "Eridanus": "Erídano", "Fornax": "Horno", "Gemini": "Géminis", "Grus": "Grulla",
+                "Hercules": "Hércules", "Horologium": "Reloj", "Hydra": "Hidra", "Hydrus": "Hidra_Macho", "Indus": "Indio",
+                "Lacerta": "Lagarto", "Leo": "Leo", "Leo_Minor": "León_Menor", "Lepus": "Liebre", "Libra": "Libra",
+                "Lupus": "Lobo", "Lynx": "Lince", "Lyra": "Lira", "Mensa": "Mesa", "Microscopium": "Microscopio",
+                "Monoceros": "Unicornio", "Musca": "Mosca", "Norma": "Escuadra", "Octans": "Octante", "Ophiuchus": "Ofiuco",
+                "Orion": "Orión", "Pavo": "Pavo", "Pegasus": "Pegaso", "Perseus": "Perseo", "Phoenix": "Fénix",
+                "Pictor": "Pintor", "Pisces": "Piscis", "Piscis_Austrinus": "Pez_Austral", "Puppis": "Popa", "Pyxis": "Brújula",
+                "Reticulum": "Retículo", "Sagitta": "Flecha", "Sagittarius": "Sagitario", "Scorpius": "Escorpio",
+                "Sculptor": "Escultor", "Scutum": "Escudo", "Serpens": "Serpiente", "Sextans": "Sextante", "Taurus": "Tauro",
+                "Telescopium": "Telescopio", "Triangulum": "Triángulo", "Triangulum_Australe": "Triángulo_Austral",
+                "Tucana": "Tucán", "Ursa_Major": "Osa_Mayor", "Ursa_Minor": "Osa_Menor", "Vela": "Vela", "Virgo": "Virgo",
+                "Volans": "Pez_Volador", "Vulpecula": "Zorra"
             }
         }
 }

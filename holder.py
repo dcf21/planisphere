@@ -197,6 +197,8 @@ class Holder(BaseComponent):
         for hr in arange(-7, 7.1, 1):
             txt: str = "{:.0f}{}".format(hr if (hr > 0) else hr + 12,
                                          "AM" if (hr > 0) else "PM")
+            if language == "es":
+                txt = "{:d} h".format(int(hr if (hr > 0) else hr + 24))
             if language == "fr":
                 txt = "{:02d}h00".format(int(hr if (hr > 0) else hr + 24))
             if hr == 0:
@@ -255,7 +257,7 @@ class Holder(BaseComponent):
                 h_align=0, v_align=0, gap=0, rotation=0)
             context.set_font_size(1)
             context.text_wrapped(
-                text=text[language]['instructions_2'].format(cardinal="north" if not is_southern else "south"),
+                text=text[language]['instructions_2'].format(cardinal=text[language]['cardinal_points']['n' if not is_southern else 's'].lower()),
                 x=0, y=-3.4 * unit_cm, width=4.5 * unit_cm, justify=-1,
                 h_align=0, v_align=1, rotation=0)
 
